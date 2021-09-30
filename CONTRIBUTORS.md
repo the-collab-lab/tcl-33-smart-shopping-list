@@ -8,4 +8,5 @@ Add yourself as a contributor to this project as a Markdown link that links your
 
 ## Mentors
 - [Lauren Beatty](https://github.com/laurenmbeatty) 👩‍🎤
+- [Arvin Fernandez](https://github.com/arvinf07) 🌎
 ## Code of Conduct Contacts
