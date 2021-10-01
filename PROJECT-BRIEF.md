@@ -4,7 +4,7 @@
 
 ### Locations for things
 
-- Site: {PRODUCTION_URL}
+- Site: https://tcl-33-smart-shopping-list.web.app/
 - Repo: https://github.com/the-collab-lab/tcl-33-smart-shopping-list
 - Clone URL: `https://github.com/the-collab-lab/tcl-33-smart-shopping-list.git`
 - Issue list: https://github.com/the-collab-lab/tcl-33-smart-shopping-list/projects/1
