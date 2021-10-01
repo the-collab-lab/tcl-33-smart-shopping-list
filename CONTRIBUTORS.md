@@ -12,5 +12,6 @@ Add yourself as a contributor to this project as a Markdown link that links your
 ## Mentors
 
 - [Lauren Beatty](https://github.com/laurenmbeatty) 👩‍🎤
+- [Scott Reu](https://github.com/gatsbysghost) 🧙‍♂️
 
 ## Code of Conduct Contacts
