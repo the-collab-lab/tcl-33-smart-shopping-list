@@ -2,7 +2,6 @@ import React from 'react';
 import { db } from '../lib/firebase';
 // import firebase from 'firebase/app';
 import 'firebase/firestore';
-// import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 
 import { collection, doc, setDoc } from 'firebase/firestore';
 
