@@ -5,16 +5,12 @@ import 'firebase/firestore';
 
 import { collection, doc, setDoc } from 'firebase/firestore';
 
-export default async function AddItem() {
-  const somethingRef = collection(db, 'something');
+export default function AddItem() {
+  // const listsRef = collection(db, 'lists');
 
-  await setDoc(doc(somethingRef, 'SF'), {
-    name: 'San Francisco',
-    state: 'CA',
-    country: 'USA',
-    capital: false,
-    population: 860000,
-    regions: ['west_coast', 'norcal'],
+  db.collection('lists').doc('1').set({
+    name: 'Eggs',
+    price: 3.25,
   });
   // await setDoc(doc(citiesRef, "LA"), {
   //     name: "Los Angeles", state: "CA", country: "USA",
