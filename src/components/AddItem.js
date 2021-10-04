@@ -2,36 +2,43 @@ import React from 'react';
 import { db } from '../lib/firebase';
 // import firebase from 'firebase/app';
 import 'firebase/firestore';
+import { useCollection } from 'react-firebase-hooks/firestore';
 
 import { collection, doc, setDoc } from 'firebase/firestore';
 
 export default function AddItem() {
-  // const listsRef = collection(db, 'lists');
+  // const citiesRef = collection(db, 'cities');
+  // setDoc(doc(citiesRef, "NY"), {
+  //  name: "Los Angeles", state: "CA", country: "USA",
+  //  capital: false, population: 3900000,
+  // regions: ["west_coast", "socal"] });
 
-  db.collection('lists').doc('1').set({
-    name: 'Eggs',
-    price: 3.25,
-  });
-  // await setDoc(doc(citiesRef, "LA"), {
-  //     name: "Los Angeles", state: "CA", country: "USA",
-  //     capital: false, population: 3900000,
-  //     regions: ["west_coast", "socal"] });
-  // await setDoc(doc(citiesRef, "DC"), {
-  //     name: "Washington, D.C.", state: null, country: "USA",
-  //     capital: true, population: 680000,
-  //     regions: ["east_coast"] });
-  // await setDoc(doc(citiesRef, "TOK"), {
-  //     name: "Tokyo", state: null, country: "Japan",
-  //     capital: true, population: 9000000,
-  //     regions: ["kanto", "honshu"] });
-  // await setDoc(doc(citiesRef, "BJ"), {
-  //     name: "Beijing", state: null, country: "China",
-  //     capital: true, population: 21500000,
-  //     regions: ["jingjinji", "hebei"] });
+  // Write 1 document
+  // db.collection('lists').doc('4').set({
+  //   name: 'Kiwi',
+  //   price: 2.00,
+  // });
+
+  // Read 1 document
+  let docRef = db.collection('lists').doc('4');
+  docRef.get().then((doc) => console.log(doc.data()));
+
+  const [value, loading, error] = useCollection(db.collection('lists'));
+
+  if (!loading) {
+    console.log(value);
+  }
 
   return (
     <div>
       <h2>Testing 123</h2>
+      <ul>
+        {value.docs.map((doc) => (
+          <li key={doc.id}>{JSON.stringify(doc.data())}, </li>
+        ))}
+      </ul>
+
+      {/* <button onClick={}>Add Item</button> */}
     </div>
   );
 }
