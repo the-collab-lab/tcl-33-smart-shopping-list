@@ -17,14 +17,22 @@ const Navbar = () => {
             className="navbar-item"
             activeClassName="is-active"
             to="/AddItem"
+            activeStyle={{
+              fontWeight: 'bold',
+              color: 'blue',
+            }}
           >
-            Add Item
+            <span>Add Item &nbsp;&nbsp;</span>
           </NavLink>
 
           <NavLink
             className="navbar-item"
             activeClassName="is-active"
             to="/ViewList"
+            activeStyle={{
+              fontWeight: 'bold',
+              color: 'blue',
+            }}
           >
             View List
           </NavLink>
