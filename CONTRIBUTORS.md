@@ -18,3 +18,4 @@ Add yourself as a contributor to this project as a Markdown link that links your
 - [Scott Reu](https://github.com/gatsbysghost) 🧙‍♂️
 
 ## Code of Conduct Contacts
+- [Stacie Taylor](https://github.com/stacietaylorcima)
