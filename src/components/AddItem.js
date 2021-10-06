@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { db } from '../lib/firebase';
 // import firebase from 'firebase/app';
 import 'firebase/firestore';
@@ -7,38 +7,58 @@ import { useCollection } from 'react-firebase-hooks/firestore';
 import { collection, doc, setDoc } from 'firebase/firestore';
 
 export default function AddItem() {
-  // const citiesRef = collection(db, 'cities');
-  // setDoc(doc(citiesRef, "NY"), {
-  //  name: "Los Angeles", state: "CA", country: "USA",
-  //  capital: false, population: 3900000,
-  // regions: ["west_coast", "socal"] });
-
-  // Write 1 document
-  // db.collection('lists').doc('4').set({
-  //   name: 'Kiwi',
-  //   price: 2.00,
-  // });
+  const [item, setItem] = useState('');
+  const [price, setPrice] = useState('');
 
   // Read 1 document
-  let docRef = db.collection('lists').doc('4');
-  docRef.get().then((doc) => console.log(doc.data()));
+  // let docRef = db.collection('lists').doc('5');
+  // docRef.get().then((doc) => console.log(doc.data()));
 
   const [value, loading, error] = useCollection(db.collection('lists'));
-
   if (!loading) {
-    console.log(value);
+    // console.log(value);
+    console.log(error);
   }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    e.target.reset();
+    db.collection('lists').add({
+      item,
+      price,
+    });
+    console.log('submitted');
+  };
 
   return (
     <div>
-      <h2>Testing 123</h2>
-      <ul>
-        {value.docs.map((doc) => (
-          <li key={doc.id}>{JSON.stringify(doc.data())}, </li>
-        ))}
-      </ul>
+      <h2>Grocery List</h2>
 
-      {/* <button onClick={}>Add Item</button> */}
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="item">Grocery item:</label> <br />
+        <input
+          type="text"
+          id="item"
+          value={item}
+          onChange={(e) => setItem(e.target.value)}
+        />{' '}
+        <br />
+        <label htmlFor="price">Price:</label> <br />
+        <input
+          type="text"
+          id="price"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+        />{' '}
+        <br />
+        <input type="submit" value="submit" />
+      </form>
+
+      <ul>
+        {/* {value.docs.map((doc) => (
+          <li key={doc.id}>{JSON.stringify(doc.data())}, </li>
+        ))} */}
+      </ul>
     </div>
   );
 }
