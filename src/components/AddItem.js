@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import { db } from '../lib/firebase';
-// import firebase from 'firebase/app';
-import 'firebase/firestore';
 import { useCollection } from 'react-firebase-hooks/firestore';
-
-import { collection, doc, setDoc } from 'firebase/firestore';
 
 export default function AddItem() {
   const [item, setItem] = useState('');
