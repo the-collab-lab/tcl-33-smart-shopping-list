@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { db } from '../lib/firebase';
 import { useCollection } from 'react-firebase-hooks/firestore';
 
+
 export default function AddItem() {
   // const citiesRef = collection(db, 'cities');
   // setDoc(doc(citiesRef, "NY"), {
@@ -9,6 +10,7 @@ export default function AddItem() {
   //  capital: false, population: 3900000,
   // regions: ["west_coast", "socal"] });
 
+  
   // Read 1 document
   // let docRef = db.collection('lists').doc('4');
   // docRef.get().then((doc) => console.log(doc.data()));
@@ -16,8 +18,8 @@ export default function AddItem() {
   const [value, loading, error] = useCollection(db.collection('lists'));
   const [inputs, setInputs] = useState({
     name: 'siila',
-    price: 0,
-  });
+    price: 0
+  })
 
   const renderLists = () => {
     if (!loading) {
@@ -33,10 +35,11 @@ export default function AddItem() {
 
   const writeToStore = (e) => {
     db.collection('lists').add({
-      name: inputs.name,
-      price: inputs.price,
+      'name': inputs.name,
+      'price': inputs.price,
     });
-  };
+  }
+
 
   return (
     <div>
