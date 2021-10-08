@@ -9,6 +9,9 @@ Add yourself as a contributor to this project as a Markdown link that links your
 - [Arvin Fernandez](https://github.com/arvinf07) 🌎
 - [Jennifer Toops](https://github.com/jennifertoops) 😉
 
+- [Ikram Salim](https://github.com/ikramsalim) 😀
+- [Manon Sainton](https://github.com/Ginger-Mano) 🤗
+
 ## Mentors
 
 - [Lauren Beatty](https://github.com/laurenmbeatty) 👩‍🎤
