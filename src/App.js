@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Home from './Pages/Home';
 import { Route, Switch, BrowserRouter, Link } from 'react-router-dom';
 import './App.css';
+import AddItem from './components/AddItem';
 
 class App extends Component {
   render() {
@@ -29,6 +30,5 @@ class App extends Component {
       </div>
     );
   }
-}
 
 export default App;
