@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ViewList from './Pages/ViewList';
-import AddItem from './Pages/AddItem';
 import Navbar from './components/Navbar';
 import Home from './Pages/Home';
 import { Route, Switch, BrowserRouter, Link } from 'react-router-dom';
@@ -30,5 +29,6 @@ class App extends Component {
       </div>
     );
   }
+}
 
 export default App;
