@@ -6,17 +6,6 @@ export default function AddItem() {
   const [item, setItem] = useState('');
   const [price, setPrice] = useState('');
 
-  // Read 1 document
-  // let docRef = db.collection('lists').doc('5');
-  // docRef.get().then((doc) => console.log(doc.data()));
-
-  const [value, loading, error] = useCollection(db.collection('lists'));
-
-  if (!loading) {
-    // console.log(value);
-    console.log(error);
-  }
-
   const handleSubmit = (e) => {
     e.preventDefault();
     e.target.reset();
@@ -27,26 +16,13 @@ export default function AddItem() {
     console.log('submitted');
   };
 
+  const handleChange = (e) => {
+    console.log('changed');
+  };
+
   return (
     <div>
-      <h2>Grocery List</h2>
-
-      <div>
-        <p>
-          {error && <strong>Error: {JSON.stringify(error)}</strong>}
-          {loading && <span>Collection: Loading...</span>}
-          {value && (
-            <ul>
-              Collection:{' '}
-              {value.docs.map((doc) => (
-                <li key={doc.id}>{JSON.stringify(doc.data())}, </li>
-              ))}
-            </ul>
-          )}
-        </p>
-      </div>
-
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} onChange={handleChange}>
         <label htmlFor="item">Grocery item:</label> <br />
         <input
           type="text"
@@ -64,6 +40,24 @@ export default function AddItem() {
         />{' '}
         <br />
         <input type="submit" value="submit" />
+        <input type="radio" id="Soon" value="7" name="Urgency" />
+        <label htmlFor="Soon">Soon</label>
+        <input
+          htmlFor="Urgency"
+          id="Kind of Soon"
+          type="radio"
+          value="14"
+          name="Urgency"
+        />
+        <label htmlFor="Kind of Soon">Kind of Soon</label>
+        <input
+          htmlFor="Urgency"
+          id="Not Soon"
+          type="radio"
+          value="30"
+          name="Urgency"
+        />
+        <label htmlFor="Not Soon"> Not Soon</label>
       </form>
     </div>
   );
