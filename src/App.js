@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import NewList from './Pages/NewList';
+import NewList from './components/NewList';
 import ViewList from './Pages/ViewList';
 import Navbar from './components/Navbar';
 import Home from './Pages/Home';

@@ -1,21 +1,18 @@
 import React from 'react';
 import { getToken, words } from '@the-collab-lab/shopping-list-utils';
 
-const createTokenProvider = () => {
+function createTokenProvider() {
   /* Implementation */
+  document.querySelector('p').innerText = getToken(words);
+}
 
-  return {
-    getToken,
-  };
-};
-
-const NewList = () => (
-  <div>
-    <h1 className="title is-1"> Create a new list </h1>
-    <div>{createTokenProvider}</div>
-  </div>
-);
+function NewList() {
+  return (
+    <div>
+      <button onClick={createTokenProvider}>Click me!</button>
+      <p></p>
+    </div>
+  );
+}
 
 export default NewList;
-
-//This file is under src/components
