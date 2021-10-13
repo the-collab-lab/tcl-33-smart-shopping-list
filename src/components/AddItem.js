@@ -28,7 +28,10 @@ export default function AddItem() {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="item">Grocery item:</label> <br />
+        <label htmlFor="item">
+          <b>Grocery item:</b>
+        </label>{' '}
+        <br />
         <input
           type="text"
           id="item"
@@ -36,27 +39,25 @@ export default function AddItem() {
           onChange={(e) => setItem(e.target.value)}
         />{' '}
         <br />
-        <div onChange={(e) => setUrgency(parseInt(e.target.value))}>
-          <input type="radio" id="Soon" value="7" name="Urgency" />
-          <label htmlFor="Soon">Soon</label>
-          <input
-            htmlFor="Urgency"
-            id="Kind of Soon"
-            type="radio"
-            value="14"
-            name="Urgency"
-          />
-          <label htmlFor="Kind of Soon">Kind of Soon</label>
-          <input
-            htmlFor="Urgency"
-            id="Not Soon"
-            type="radio"
-            value="30"
-            name="Urgency"
-          />
-          <label htmlFor="Not Soon"> Not Soon</label>
-        </div>
-        <input type="submit" value="submit" />
+        <br />
+        <fieldset onChange={(e) => setUrgency(parseInt(e.target.value))}>
+          <legend>
+            <b>How soon will you buy this again?</b>
+          </legend>
+
+          <input type="radio" id="soon" value="7" name="urgency" />
+          <label htmlFor="soon">Soon</label>
+          <br />
+
+          <input type="radio" id="kind-of-soon" value="14" name="urgency" />
+          <label htmlFor="kind-of-soon"> Kind of soon</label>
+          <br />
+
+          <input type="radio" id="not-soon" value="30" name="urgency" />
+          <label htmlFor="not-soon"> Not soon</label>
+          <br />
+        </fieldset>
+        <input type="submit" value="Add item" />
       </form>
     </div>
   );
