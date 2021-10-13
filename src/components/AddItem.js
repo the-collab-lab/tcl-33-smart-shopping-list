@@ -17,6 +17,7 @@ export default function AddItem() {
     db.collection('lists').add({
       item,
       urgency,
+      lastPurchased: null,
       // getToken()
     });
     console.log('submitted');
