@@ -1,16 +1,21 @@
 import React from 'react';
 import { getToken, words } from '@the-collab-lab/shopping-list-utils';
-
-function createTokenProvider() {
-  /* Implementation */
-  document.querySelector('p').innerText = getToken(words);
-}
+import { useHistory } from 'react-router-dom';
 
 function NewList() {
+  function createTokenProvider() {
+    /* Implementation */
+    document.querySelector('p').innerText = getToken(words);
+    console.log(getToken(words));
+  }
+
+  const history = useHistory();
+  const handleClick = () => history.push('./NewList');
+
   return (
     <div>
-      <button onClick={createTokenProvider}>Click me!</button>
-      <p></p>
+      <button onClick={handleClick}>Create a New Shopping List!</button>
+      <p>{createTokenProvider}</p>
     </div>
   );
 }
