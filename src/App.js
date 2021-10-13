@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import NewList from './Pages/NewList';
 import ViewList from './Pages/ViewList';
 import Navbar from './components/Navbar';
 import Home from './Pages/Home';
@@ -16,6 +17,9 @@ class App extends Component {
             <Switch>
               <Route exact path="/">
                 <Home />
+              </Route>
+              <Route exact path="/NewList">
+                <NewList />
               </Route>
               <Route path="/AddItem">
                 <AddItem />
