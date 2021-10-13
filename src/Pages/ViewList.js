@@ -9,18 +9,16 @@ const ViewList = () => {
     <div>
       <h2>Grocery List</h2>
 
-      <p>
-        {error && <strong>Error: {JSON.stringify(error)}</strong>}
-        {loading && <span>Collection: Loading...</span>}
-        {value && (
-          <ul>
-            Collection:{' '}
-            {value.docs.map((doc) => (
-              <li key={doc.id}>{JSON.stringify(doc.data())}, </li>
-            ))}
-          </ul>
-        )}
-      </p>
+      {error && <strong>Error: {JSON.stringify(error)}</strong>}
+      {loading && <span>Collection: Loading...</span>}
+      {value && (
+        <ul>
+          <b>Collection: </b>
+          {value.docs.map((doc) => (
+            <li key={doc.id}>{JSON.stringify(doc.data().item)} </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
