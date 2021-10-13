@@ -9,6 +9,7 @@ import {
 export default function AddItem() {
   const [item, setItem] = useState('');
   const [urgency, setUrgency] = useState(0);
+  const [userToken, setToken] = useState(getToken());
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,6 +19,7 @@ export default function AddItem() {
       item,
       urgency,
       lastPurchased: null,
+      userToken,
       // getToken()
     });
     console.log('submitted');
