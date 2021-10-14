@@ -1,10 +1,12 @@
 import React from 'react';
-import NewList from '../components/NewList';
+import CreateList from '../components/CreateList';
 
 const Home = () => (
   <div>
     <h1 className="title is-1">This is the Home Page</h1>
-    <NewList />
+    <h3>
+      <CreateList />
+    </h3>
   </div>
 );
 

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import NewList from './components/NewList';
+import NewList from './Pages/NewList';
 import ViewList from './Pages/ViewList';
 import Navbar from './components/Navbar';
 import Home from './Pages/Home';
 import { Route, Switch, BrowserRouter, Link } from 'react-router-dom';
 import './App.css';
 import AddItem from './components/AddItem';
+// import CreateList from './components/CreateList';
 
 class App extends Component {
   render() {
