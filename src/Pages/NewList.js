@@ -1,12 +1,11 @@
 // //This is for NewList.js for  Pages
 import React from 'react';
-// import { getToken, words } from '@the-collab-lab/shopping-list-utils';
-import CreateTokens from '../components/CreateTokens';
+import AddItem from '../components/AddItem';
 
 const NewList = () => (
   <div>
-    <h1 className="title is-1"> Create a new list </h1>
-    <CreateTokens />
+    <h1 className="title is-1">Add Your Items</h1>
+    <AddItem />
   </div>
 );
 
