@@ -9,6 +9,7 @@ import {
 export default function AddItem() {
   const [item, setItem] = useState('');
   const [urgency, setUrgency] = useState(0);
+  const [lastDatePurchased, setLastDatePurchased] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,7 +18,8 @@ export default function AddItem() {
     db.collection('lists').add({
       item,
       urgency,
-      // getToken()
+      lastDatePurchased,
+      //getToken
     });
     console.log('submitted');
   };
@@ -25,7 +27,9 @@ export default function AddItem() {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="item">Grocery item:</label> <br />
+        <label htmlFor="item">Item Name:</label>
+        <br />
+        <br />
         <input
           type="text"
           id="item"
@@ -33,9 +37,12 @@ export default function AddItem() {
           onChange={(e) => setItem(e.target.value)}
         />{' '}
         <br />
+        <h3>How soon will you buy this again?</h3>
         <div onChange={(e) => setUrgency(parseInt(e.target.value))}>
           <input type="radio" id="Soon" value="7" name="Urgency" />
           <label htmlFor="Soon">Soon</label>
+          <br />
+
           <input
             htmlFor="Urgency"
             id="Kind of Soon"
@@ -44,6 +51,8 @@ export default function AddItem() {
             name="Urgency"
           />
           <label htmlFor="Kind of Soon">Kind of Soon</label>
+          <br />
+
           <input
             htmlFor="Urgency"
             id="Not Soon"
@@ -52,6 +61,7 @@ export default function AddItem() {
             name="Urgency"
           />
           <label htmlFor="Not Soon"> Not Soon</label>
+          <br />
         </div>
         <input type="submit" value="submit" />
       </form>
