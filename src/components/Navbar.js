@@ -48,7 +48,7 @@ const Navbar = () => {
             View List&nbsp;&nbsp;
           </NavLink>
 
-          <NavLink
+          {/* <NavLink
             className="navbar-item"
             activeClassName="is-active"
             to="/NewList"
@@ -58,7 +58,7 @@ const Navbar = () => {
             }}
           >
             Create a new list
-          </NavLink>
+          </NavLink> */}
         </div>
       </div>
     </nav>
