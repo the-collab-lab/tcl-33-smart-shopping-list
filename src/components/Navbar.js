@@ -47,18 +47,6 @@ const Navbar = () => {
           >
             View List&nbsp;&nbsp;
           </NavLink>
-
-          {/* <NavLink
-            className="navbar-item"
-            activeClassName="is-active"
-            to="/NewList"
-            activeStyle={{
-              fontWeight: 'bold',
-              color: 'blue',
-            }}
-          >
-            Create a new list
-          </NavLink> */}
         </div>
       </div>
     </nav>
