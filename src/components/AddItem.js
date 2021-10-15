@@ -9,7 +9,6 @@ import {
 export default function AddItem() {
   const [item, setItem] = useState('');
   const [urgency, setUrgency] = useState(0);
-  const [lastDatePurchased, setLastDatePurchased] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,7 +17,6 @@ export default function AddItem() {
     db.collection('lists').add({
       item,
       urgency,
-      lastDatePurchased,
       //getToken
     });
     console.log('submitted');
