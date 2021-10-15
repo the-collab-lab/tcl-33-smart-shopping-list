@@ -8,7 +8,8 @@ import {
 
 export default function AddItem() {
   const [item, setItem] = useState('');
-  const [urgency, setUrgency] = useState(0);
+  const [urgency, setUrgency] = useState(7);
+  const [userToken, setToken] = useState(getToken()); // sets a new token when component mounts
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,51 +18,65 @@ export default function AddItem() {
     db.collection('lists').add({
       item,
       urgency,
-      //getToken
+      lastPurchased: null,
+      userToken,
     });
-    console.log('submitted');
+    setItem(''); // resets input field after submission
   };
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="item">Item Name:</label>
-        <br />
+        <label htmlFor="item">
+          <b>Grocery item:</b>
+        </label>{' '}
         <br />
         <input
           type="text"
           id="item"
           value={item}
+          required={true}
           onChange={(e) => setItem(e.target.value)}
         />{' '}
         <br />
-        <h3>How soon will you buy this again?</h3>
-        <div onChange={(e) => setUrgency(parseInt(e.target.value))}>
-          <input type="radio" id="Soon" value="7" name="Urgency" />
-          <label htmlFor="Soon">Soon</label>
+        <br />
+        {/* This fieldset is similar to what we wad going on with the div, just better for accessibility */}
+        <fieldset onChange={(e) => setUrgency(parseInt(e.target.value))}>
+          <legend>
+            <b>How soon will you buy this again?</b>
+          </legend>
+
+          <input
+            type="radio"
+            id="soon"
+            value="7"
+            name="urgency"
+            checked={urgency === 7}
+          />
+          <label htmlFor="soon">Soon</label>
           <br />
 
           <input
-            htmlFor="Urgency"
-            id="Kind of Soon"
             type="radio"
+            id="kind-of-soon"
             value="14"
-            name="Urgency"
+            name="urgency"
+            checked={urgency === 14}
           />
-          <label htmlFor="Kind of Soon">Kind of Soon</label>
+          <label htmlFor="kind-of-soon"> Kind of soon</label>
           <br />
 
           <input
-            htmlFor="Urgency"
-            id="Not Soon"
             type="radio"
+            id="not-soon"
             value="30"
-            name="Urgency"
+            name="urgency"
+            checked={urgency === 30}
           />
-          <label htmlFor="Not Soon"> Not Soon</label>
+          <label htmlFor="not-soon"> Not soon</label>
           <br />
-        </div>
-        <input type="submit" value="submit" />
+        </fieldset>
+        <input type="submit" value="Add item" />
       </form>
     </div>
   );
