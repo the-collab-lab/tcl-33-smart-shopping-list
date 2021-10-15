@@ -15,13 +15,11 @@ function App() {
     user && setToken(user);
   }, [token]);
 
-  const createToken = () => {
-    const token = getToken(words);
-    localStorage.setItem('Token', token);
-  };
-
-  const handleSubmit = () => {
-    createToken();
+  const createToken = (e) => {
+    e.preventDefault();
+    const newToken = getToken(words);
+    localStorage.setItem('Token', newToken);
+    setToken(newToken);
   };
 
   return (
@@ -34,7 +32,7 @@ function App() {
               {token ? (
                 <Redirect to="/ViewList" />
               ) : (
-                <Home onSubmit={() => handleSubmit()} />
+                <Home onSubmit={(e) => createToken(e)} />
               )}
             </Route>
             <Route exact path="/AddItem">
