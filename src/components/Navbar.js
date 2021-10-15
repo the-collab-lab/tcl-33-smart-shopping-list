@@ -16,6 +16,17 @@ const Navbar = () => {
           <NavLink
             className="navbar-item"
             activeClassName="is-active"
+            to="/"
+            activeStyle={{
+              fontWeight: 'bold',
+              color: 'blue',
+            }}
+          >
+            <span>Home&nbsp;&nbsp;</span>
+          </NavLink>
+          <NavLink
+            className="navbar-item"
+            activeClassName="is-active"
             to="/AddItem"
             activeStyle={{
               fontWeight: 'bold',
@@ -34,10 +45,10 @@ const Navbar = () => {
               color: 'blue',
             }}
           >
-            View List
+            View List&nbsp;&nbsp;
           </NavLink>
 
-          <NavLink
+          {/* <NavLink
             className="navbar-item"
             activeClassName="is-active"
             to="/NewList"
@@ -47,7 +58,7 @@ const Navbar = () => {
             }}
           >
             Create a new list
-          </NavLink>
+          </NavLink> */}
         </div>
       </div>
     </nav>
