@@ -2,10 +2,15 @@
 import React from 'react';
 // import { getToken, words } from '@the-collab-lab/shopping-list-utils';
 import CreateTokens from '../components/CreateTokens';
+import AddItem from './AddItem';
 
 const NewList = () => (
   <div>
-    <h1 className="title is-1"> Create a new list </h1>
+    <form>
+      <input></input>
+      <button type="submit">Add Item </button>
+    </form>
+
     <CreateTokens />
   </div>
 );

@@ -7,7 +7,7 @@ function CreateList() {
 
   return (
     <div>
-      <button onClick={handleClick}>Create a New Shopping List!</button>
+      <button onClick={handleClick}>Create Shopping List </button>
     </div>
   );
 }
