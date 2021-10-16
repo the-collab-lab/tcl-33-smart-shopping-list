@@ -1,25 +1,18 @@
 import React, { useState } from 'react';
 import { db } from '../lib/firebase';
-import {
-  getToken,
-  words,
-  calculateEstimate,
-} from '@the-collab-lab/shopping-list-utils';
 
-export default function AddItem() {
+export default function AddItem({ token }) {
   const [item, setItem] = useState('');
   const [urgency, setUrgency] = useState(7);
-  const [userToken, setToken] = useState(getToken()); // sets a new token when component mounts
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(item, urgency);
     e.target.reset();
-    db.collection('lists').add({
+    db.collection(token || 'lists').add({
       item,
       urgency,
       lastPurchased: null,
-      userToken,
     });
     setItem(''); // resets input field after submission
   };

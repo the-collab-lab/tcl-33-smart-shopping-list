@@ -3,7 +3,9 @@ import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../lib/firebase';
 
 const ViewList = () => {
-  const [value, loading, error] = useCollection(db.collection('lists'));
+  const [value, loading, error] = useCollection(
+    db.collection(localStorage.getItem('Token') || 'lists'),
+  );
 
   return (
     <div>
