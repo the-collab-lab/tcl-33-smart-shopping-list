@@ -1,69 +1,82 @@
 import React, { useState } from 'react';
 import { db } from '../lib/firebase';
-import { useCollection } from 'react-firebase-hooks/firestore';
+import {
+  getToken,
+  words,
+  calculateEstimate,
+} from '@the-collab-lab/shopping-list-utils';
 
 export default function AddItem() {
   const [item, setItem] = useState('');
-  const [price, setPrice] = useState('');
-
-  // Read 1 document
-  // let docRef = db.collection('lists').doc('5');
-  // docRef.get().then((doc) => console.log(doc.data()));
-
-  const [value, loading, error] = useCollection(db.collection('lists'));
-
-  if (!loading) {
-    // console.log(value);
-    console.log(error);
-  }
+  const [urgency, setUrgency] = useState(7);
+  const [userToken, setToken] = useState(getToken()); // sets a new token when component mounts
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(item, urgency);
     e.target.reset();
     db.collection('lists').add({
       item,
-      price,
+      urgency,
+      lastPurchased: null,
+      userToken,
     });
-    console.log('submitted');
+    setItem(''); // resets input field after submission
   };
 
   return (
     <div>
-      <h2>Grocery List</h2>
-
-      <div>
-        <p>
-          {error && <strong>Error: {JSON.stringify(error)}</strong>}
-          {loading && <span>Collection: Loading...</span>}
-          {value && (
-            <ul>
-              Collection:{' '}
-              {value.docs.map((doc) => (
-                <li key={doc.id}>{JSON.stringify(doc.data())}, </li>
-              ))}
-            </ul>
-          )}
-        </p>
-      </div>
-
       <form onSubmit={handleSubmit}>
-        <label htmlFor="item">Grocery item:</label> <br />
+        <label htmlFor="item">
+          <b>Grocery item:</b>
+        </label>{' '}
+        <br />
         <input
           type="text"
           id="item"
           value={item}
+          required={true}
           onChange={(e) => setItem(e.target.value)}
         />{' '}
         <br />
-        <label htmlFor="price">Price:</label> <br />
-        <input
-          type="text"
-          id="price"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-        />{' '}
         <br />
-        <input type="submit" value="submit" />
+        {/* This fieldset is similar to what we wad going on with the div, just better for accessibility */}
+        <fieldset onChange={(e) => setUrgency(parseInt(e.target.value))}>
+          <legend>
+            <b>How soon will you buy this again?</b>
+          </legend>
+
+          <input
+            type="radio"
+            id="soon"
+            value="7"
+            name="urgency"
+            checked={urgency === 7}
+          />
+          <label htmlFor="soon">Soon</label>
+          <br />
+
+          <input
+            type="radio"
+            id="kind-of-soon"
+            value="14"
+            name="urgency"
+            checked={urgency === 14}
+          />
+          <label htmlFor="kind-of-soon"> Kind of soon</label>
+          <br />
+
+          <input
+            type="radio"
+            id="not-soon"
+            value="30"
+            name="urgency"
+            checked={urgency === 30}
+          />
+          <label htmlFor="not-soon"> Not soon</label>
+          <br />
+        </fieldset>
+        <input type="submit" value="Add item" />
       </form>
     </div>
   );
