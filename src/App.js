@@ -36,10 +36,10 @@ function App() {
               )}
             </Route>
             <Route exact path="/AddItem">
-              <AddItem />
+              <AddItem token={token}/>
             </Route>
             <Route exact path="/ViewList">
-              <ViewList />
+              <ViewList token={token} />
             </Route>
           </Switch>
         </div>
