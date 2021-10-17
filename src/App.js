@@ -4,7 +4,7 @@ import Navbar from './components/Navbar';
 import Home from './Pages/Home';
 import { Route, Switch, BrowserRouter, Link } from 'react-router-dom';
 import './App.css';
-import AddItem from './components/AddItem';
+import AddItem from './Pages/AddItem';
 
 class App extends Component {
   render() {
