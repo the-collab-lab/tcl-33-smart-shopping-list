@@ -2,8 +2,8 @@ import React from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../lib/firebase';
 
-const ViewList = () => {
-  const [value, loading, error] = useCollection(db.collection('lists'));
+const ViewList = ({ token }) => {
+  const [value, loading, error] = useCollection(db.collection(token));
 
   return (
     <div>

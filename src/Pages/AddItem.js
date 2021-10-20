@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
 import { db } from '../lib/firebase';
-import {
-  getToken,
-  words,
-  calculateEstimate,
-} from '@the-collab-lab/shopping-list-utils';
 
 export default function AddItem({ token }) {
   const [item, setItem] = useState('');
