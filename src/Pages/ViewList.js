@@ -3,7 +3,7 @@ import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../lib/firebase';
 
 const ViewList = ({ token }) => {
-  const [value, loading, error] = useCollection(db.collection(token));
+  const [list, loading, error] = useCollection(db.collection(token));
 
   return (
     <div>
@@ -11,10 +11,10 @@ const ViewList = ({ token }) => {
 
       {error && <strong>Error: {JSON.stringify(error)}</strong>}
       {loading && <span>Collection: Loading...</span>}
-      {value && (
+      {list && (
         <ul>
           <b>Collection: </b>
-          {value.docs.map((doc) => (
+          {list.docs.map((doc) => (
             <li key={doc.id}>{JSON.stringify(doc.data().item)} </li>
           ))}
         </ul>

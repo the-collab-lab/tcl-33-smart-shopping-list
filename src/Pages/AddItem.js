@@ -7,13 +7,11 @@ export default function AddItem({ token }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    e.target.reset();
     db.collection(token).add({
       item,
       urgency,
       lastPurchased: null,
     });
-    // resets input field after submission
     setUrgency(7);
     setItem('');
   };
@@ -34,7 +32,6 @@ export default function AddItem({ token }) {
         />{' '}
         <br />
         <br />
-        {/* This fieldset is similar to what we wad going on with the div, just better for accessibility */}
         <fieldset onChange={(e) => setUrgency(parseInt(e.target.value))}>
           <legend>
             <b>How soon will you buy this again?</b>
