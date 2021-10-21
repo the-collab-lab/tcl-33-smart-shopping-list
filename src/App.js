@@ -5,7 +5,7 @@ import Navbar from './components/Navbar';
 import Home from './Pages/Home';
 import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom';
 import './App.css';
-import AddItem from './components/AddItem';
+import AddItem from './Pages/AddItem';
 
 function App() {
   const [token, setToken] = useState(null);
@@ -30,13 +30,13 @@ function App() {
           <Switch>
             <Route exact path="/">
               {token ? (
-                <Redirect to="/ViewList" />
+                <Redirect to="/AddItem" />
               ) : (
                 <Home onSubmit={(e) => createToken(e)} />
               )}
             </Route>
             <Route exact path="/AddItem">
-              <AddItem token={token}/>
+              <AddItem token={token} />
             </Route>
             <Route exact path="/ViewList">
               <ViewList token={token} />
