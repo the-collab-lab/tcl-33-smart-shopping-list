@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-function JoinList({ onSubmit }) {
+function JoinList({ onSharedToken }) {
+  const [token, setToken] = useState('');
+
   return (
-    <form onSubmit={onSubmit}>
-      <input type="text" placeholder="enter token here"></input>
+    <form onSubmit={(e) => onSharedToken(e, token)}>
+      <label htmlFor="share-token">Share Token</label>
+      <br />
+      <input
+        onChange={(e) => setToken(e.target.value)}
+        id="share-token"
+        type="text"
+        value={token}
+        placeholder="enter token here"
+      ></input>
       <br />
       <button type="submit">Join Shopping List!</button>
     </form>
