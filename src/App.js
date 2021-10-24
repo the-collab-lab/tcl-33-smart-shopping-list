@@ -23,23 +23,19 @@ function App() {
     setToken(newToken);
   };
 
-  // db.collection(id).get().then(resp => !!resp.size)
-  const collectionExists = async (id) => {
-    let resp = await db.collection(id).get();
-    return !!resp.size;
-  };
-  // console.log(
-  //   collectionExists('ncaahapp ').then((value) => console.log(value)),
-  // );
-
   const shareToken = (e, token) => {
     e.preventDefault();
-    // if(exists)
-    // localStorage.setItem('Token', token);
-    // setToken(token);
-    // check if token exists
-    // if it does save it in localStorage
-    // else show an error and reset the form
+    db.collection(token)
+      .get()
+      .then((resp) => {
+        if (resp.size) {
+          localStorage.setItem('Token', token);
+          setToken(token);
+          console.log('Im valid!');
+        } else {
+          alert('That list is not valid, try again or create a new list');
+        }
+      });
   };
 
   return (
