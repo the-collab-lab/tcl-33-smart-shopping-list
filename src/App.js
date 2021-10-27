@@ -41,7 +41,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
+        <Navbar token={token} />
         <div className="container mt-2" style={{ marginTop: 40 }}>
           <Switch>
             <Route exact path="/">
