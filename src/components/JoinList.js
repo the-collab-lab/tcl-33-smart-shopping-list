@@ -6,11 +6,11 @@ function JoinList({ onSharedToken }) {
   const [token, setToken] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  function renderError() {
-    if (errorMessage) {
-      return <ErrorMessage message={errorMessage} />;
-    }
-  }
+  // function renderError() {
+  //   if (errorMessage) {
+  //     return <ErrorMessage message={errorMessage} />;
+  //   }
+  // }
 
   const onSubmit = (e) => {
     e.preventDefault();
