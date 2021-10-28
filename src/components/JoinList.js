@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { db } from '../lib/firebase';
-import ErrorMessage from './ErrorMessage';
 
-function JoinList({ onSharedToken }) {
+function JoinList({ onSharedToken, setErrorMessage }) {
   const [token, setToken] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -32,7 +30,6 @@ function JoinList({ onSharedToken }) {
     <form onSubmit={(e) => onSubmit(e)}>
       <label htmlFor="share-token">Share Token</label>
       <br />
-      {errorMessage && <ErrorMessage message={errorMessage} />}
       <input
         onChange={setTokenHandler}
         id="share-token"
