@@ -31,10 +31,12 @@ function App() {
         if (resp.size) {
           localStorage.setItem('Token', token);
           setToken(token);
-          console.log('Im valid!');
         } else {
           alert('That list is not valid, try again or create a new list');
         }
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 
@@ -49,8 +51,8 @@ function App() {
                 <Redirect to="/AddItem" />
               ) : (
                 <Home
-                  onSubmit={(e) => createToken(e)}
-                  onSharedToken={shareToken}
+                  createToken={(e) => createToken(e)}
+                  onTokenSubmit={shareToken}
                 />
               )}
             </Route>
