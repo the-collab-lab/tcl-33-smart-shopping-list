@@ -1,19 +1,34 @@
 import React, { useState } from 'react';
 import { db } from '../lib/firebase';
 
-export default function AddItem({ token }) {
+export default function AddItem({ token, setErrorMessage }) {
   const [item, setItem] = useState('');
   const [urgency, setUrgency] = useState(7);
 
+  const validInput = () => {
+    if (item.trim().length < 3) {
+      setErrorMessage(
+        'Item must be at least 3 characters long. Please try again',
+      );
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   const handleSubmit = (e) => {
+    setErrorMessage('');
     e.preventDefault();
-    db.collection(token).add({
-      item,
-      urgency,
-      lastPurchased: null,
-    });
-    setUrgency(7);
-    setItem('');
+    if (validInput()) {
+      // add succesful message
+      db.collection(token).add({
+        item,
+        urgency,
+        lastPurchased: null,
+      });
+      setUrgency(7);
+      setItem('');
+    }
   };
 
   return (

@@ -38,7 +38,7 @@ function JoinList({ onSharedToken, setErrorMessage }) {
         placeholder="enter token here"
         required
         onInvalid={(e) => {
-          e.target.setCustomValidity('error msg:  Please enter a valid token');
+          e.target.setCustomValidity("Field can't be blank. Try again.");
         }}
       ></input>
       <br />
