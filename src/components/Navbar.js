@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 const Navbar = ({ token }) => {
+  // What is the purpose of having state in this component
   const [isOpen, setOpen] = useState(false);
   return (
     <nav
