@@ -39,15 +39,17 @@ function App() {
               ) : (
                 <Home
                   createToken={(e) => createToken(e)}
-                  onTokenSubmit={shareToken}
+                  onSharedToken={shareToken}
                 />
               )}
             </Route>
+
             <Route exact path="/AddItem">
-              <AddItem token={token} />
+              {!token ? <Redirect to="/" /> : <AddItem token={token} />}
             </Route>
+
             <Route exact path="/ViewList">
-              <ViewList token={token} />
+              {!token ? <Redirect to="/" /> : <ViewList token={token} />}
             </Route>
           </Switch>
         </div>

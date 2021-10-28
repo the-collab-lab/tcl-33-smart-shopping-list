@@ -19,6 +19,9 @@ function JoinList({ onSharedToken }) {
       })
       .catch((error) => {
         console.log(error);
+        setErrorMessage(
+          'Something unexpected happened. Try refreshing the page.',
+        );
       });
   };
 
@@ -29,24 +32,32 @@ function JoinList({ onSharedToken }) {
   };
 
   return (
-    <form onSubmit={(e) => onSubmit(e)}>
-      <label htmlFor="share-token">Share Token</label>
-      <br />
-      {errorMessage && <ErrorMessage message={errorMessage} />}
-      <input
-        onChange={setTokenHandler}
-        id="share-token"
-        type="text"
-        value={token}
-        placeholder="enter token here"
-        required
-        onInvalid={(e) => {
-          e.target.setCustomValidity('error msg:  Please enter a valid token');
-        }}
-      ></input>
-      <br />
-      <button type="submit">Join Shopping List!</button>
-    </form>
+    <>
+      <p>
+        You can also <span>join an existing shopping list.</span>
+      </p>
+
+      <form onSubmit={(e) => onSubmit(e)}>
+        <label htmlFor="share-token">Share Token</label>
+        <br />
+        {errorMessage && <ErrorMessage message={errorMessage} />}
+        <input
+          onChange={setTokenHandler}
+          id="share-token"
+          type="text"
+          value={token}
+          placeholder="enter token here"
+          required
+          onInvalid={(e) => {
+            e.target.setCustomValidity(
+              'error msg:  Please enter a valid token',
+            );
+          }}
+        ></input>
+        <br />
+        <button type="submit">Join Shopping List!</button>
+      </form>
+    </>
   );
 }
 

@@ -14,23 +14,19 @@ const Navbar = ({ token }) => {
 
       <div className={`navbar-menu ${isOpen && 'is-active'}`}>
         <div className="navbar-start">
-          {!token && (
-            <>
-              <NavLink
-                className="navbar-item"
-                activeClassName="is-active"
-                to="/"
-                activeStyle={{
-                  fontWeight: 'bold',
-                  color: 'blue',
-                }}
-              >
-                <span>Home&nbsp;&nbsp;</span>
-              </NavLink>
-            </>
-          )}
-
-          {token && (
+          {!token ? (
+            <NavLink
+              className="navbar-item"
+              activeClassName="is-active"
+              to="/"
+              activeStyle={{
+                fontWeight: 'bold',
+                color: 'blue',
+              }}
+            >
+              <span>Home&nbsp;&nbsp;</span>
+            </NavLink>
+          ) : (
             <>
               <NavLink
                 className="navbar-item"

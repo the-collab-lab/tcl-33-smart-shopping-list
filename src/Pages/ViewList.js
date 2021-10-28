@@ -3,7 +3,7 @@ import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../lib/firebase';
 
 const ViewList = ({ token }) => {
-  if (token === null) token = 'default';
+  // if (token === null) token = 'default';
 
   const [list, loading, error] = useCollection(db.collection(token));
 
