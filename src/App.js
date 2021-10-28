@@ -6,7 +6,6 @@ import Home from './Pages/Home';
 import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom';
 import './App.css';
 import AddItem from './Pages/AddItem';
-import { db } from './lib/firebase';
 
 function App() {
   const [token, setToken] = useState(null);
@@ -24,20 +23,8 @@ function App() {
   };
 
   const shareToken = (token) => {
-    // e.preventDefault();
-    db.collection(token)
-      .get()
-      .then((resp) => {
-        if (resp.size) {
-          localStorage.setItem('Token', token);
-          setToken(token);
-        } else {
-          alert('That list is not valid, try again or create a new list');
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    localStorage.setItem('Token', token);
+    setToken(token);
   };
 
   return (
