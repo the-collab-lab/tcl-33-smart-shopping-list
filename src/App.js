@@ -6,11 +6,9 @@ import Home from './Pages/Home';
 import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom';
 import './App.css';
 import AddItem from './Pages/AddItem';
-import ErrorMessage from './components/ErrorMessage';
 
 function App() {
   const [token, setToken] = useState(null);
-  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const user = localStorage.getItem('Token');
@@ -33,12 +31,6 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Navbar token={token} />
-        {errorMessage && (
-          <ErrorMessage
-            message={errorMessage}
-            setErrorMessage={setErrorMessage}
-          />
-        )}
         <div className="container mt-2" style={{ marginTop: 40 }}>
           <Switch>
             <Route exact path="/">
@@ -46,23 +38,16 @@ function App() {
                 <Redirect to="/AddItem" />
               ) : (
                 <Home
-                  setErrorMessage={setErrorMessage}
                   createToken={(e) => createToken(e)}
                   onTokenSubmit={shareToken}
                 />
               )}
             </Route>
-
             <Route exact path="/AddItem">
-              {!token ? (
-                <Redirect to="/" />
-              ) : (
-                <AddItem token={token} setErrorMessage={setErrorMessage} />
-              )}
+              <AddItem token={token} />
             </Route>
-
             <Route exact path="/ViewList">
-              {!token ? <Redirect to="/" /> : <ViewList token={token} />}
+              <ViewList token={token} />
             </Route>
           </Switch>
         </div>

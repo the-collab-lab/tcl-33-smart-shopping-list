@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { db } from '../lib/firebase';
+import ErrorMessage from './ErrorMessage';
 
-function JoinList({ onSharedToken, setErrorMessage }) {
+function JoinList({ onSharedToken }) {
   const [token, setToken] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -30,6 +32,7 @@ function JoinList({ onSharedToken, setErrorMessage }) {
     <form onSubmit={(e) => onSubmit(e)}>
       <label htmlFor="share-token">Share Token</label>
       <br />
+      {errorMessage && <ErrorMessage message={errorMessage} />}
       <input
         onChange={setTokenHandler}
         id="share-token"
@@ -38,7 +41,7 @@ function JoinList({ onSharedToken, setErrorMessage }) {
         placeholder="enter token here"
         required
         onInvalid={(e) => {
-          e.target.setCustomValidity("Field can't be blank. Try again.");
+          e.target.setCustomValidity('error msg:  Please enter a valid token');
         }}
       ></input>
       <br />
