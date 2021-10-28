@@ -6,12 +6,6 @@ function JoinList({ onSharedToken }) {
   const [token, setToken] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  // function renderError() {
-  //   if (errorMessage) {
-  //     return <ErrorMessage message={errorMessage} />;
-  //   }
-  // }
-
   const onSubmit = (e) => {
     e.preventDefault();
     db.collection(token)
@@ -29,6 +23,7 @@ function JoinList({ onSharedToken }) {
   };
 
   const setTokenHandler = (e) => {
+    e.preventDefault();
     setToken(e.target.value);
     e.target.setCustomValidity('');
   };

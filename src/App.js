@@ -23,8 +23,8 @@ function App() {
     setToken(newToken);
   };
 
-  const shareToken = (e, token) => {
-    e.preventDefault();
+  const shareToken = (token) => {
+    // e.preventDefault();
     db.collection(token)
       .get()
       .then((resp) => {
