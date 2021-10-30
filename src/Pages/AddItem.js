@@ -1,19 +1,27 @@
 import React, { useState } from 'react';
+import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../lib/firebase';
 
 export default function AddItem({ token }) {
+  const [list, loading, error] = useCollection(db.collection(token));
+  console.log(list);
   const [item, setItem] = useState('');
   const [urgency, setUrgency] = useState(7);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    db.collection(token).add({
-      item,
-      urgency,
-      lastPurchased: null,
-    });
-    setUrgency(7);
-    setItem('');
+
+    if (validateNewListItem(item, list)) {
+      db.collection(token).add({
+        item,
+        urgency,
+        lastPurchased: null,
+      });
+      setUrgency(7);
+      setItem('');
+    } else {
+      console.log('Item already exists');
+    }
   };
 
   return (
@@ -72,3 +80,21 @@ export default function AddItem({ token }) {
     </div>
   );
 }
+const validateNewListItem = (listItem, list) => {
+  const punctuation = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g;
+  const filteredList = list.docs.filter(
+    (filteredItem) => filteredItem.data().item,
+  );
+
+  // filteredItem.toLowerCase()
+  //                                                            .replace(punctuation, "") ===
+  //                                                            listItem.toLowerCase()
+  //                                                            .replace(punctuation, ""));
+
+  if (filteredList) {
+    console.log('Error');
+    return false;
+  } else {
+    return true;
+  }
+};
