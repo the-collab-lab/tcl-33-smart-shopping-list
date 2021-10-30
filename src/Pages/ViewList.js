@@ -32,7 +32,6 @@ const ViewList = ({ token }) => {
   return (
     <div>
       <h2>Grocery List</h2>
-
       {loading ? <span>Collection: Loading...</span> : renderList()}
     </div>
   );

@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 
 function EmptyListPrompt() {
   return (
-    <div>
+    <div className="prompt">
       <h3>Your list is currently empty...</h3>
-      <Link to="/AddItem">Add Item</Link>
+      <Link className="button" to="/AddItem">
+        Add Item
+      </Link>
     </div>
   );
 }
