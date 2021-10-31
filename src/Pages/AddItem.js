@@ -83,7 +83,7 @@ export default function AddItem({ token }) {
 const validateNewListItem = (listItem, list) => {
   const punctuation = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g;
   const filteredList = list.docs.filter((filteredItem) =>
-    console.log(filteredItem.data().item),
+    console.log(filteredItem.data()),
   );
 
   // filteredItem.toLowerCase()
