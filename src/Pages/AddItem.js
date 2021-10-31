@@ -4,7 +4,6 @@ import { db } from '../lib/firebase';
 
 export default function AddItem({ token }) {
   const [list, loading, error] = useCollection(db.collection(token));
-  console.log(list);
   const [item, setItem] = useState('');
   const [urgency, setUrgency] = useState(7);
 
@@ -82,19 +81,17 @@ export default function AddItem({ token }) {
 }
 const validateNewListItem = (listItem, list) => {
   const punctuation = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g;
-  const filteredList = list.docs.filter((filteredItem) =>
-    console.log(filteredItem.data()),
-  );
 
-  // filteredItem.toLowerCase()
-  //                                                            .replace(punctuation, "") ===
-  //                                                            listItem.toLowerCase()
-  //                                                            .replace(punctuation, ""));
+  const filteredList = list.docs.filter((filteredItem) => {
+    const existingItem = filteredItem
+      .data()
+      .item.toLowerCase()
+      .replace(punctuation, '');
 
-  if (filteredList) {
-    console.log('Error');
-    return false;
-  } else {
-    return true;
-  }
+    const newItem = listItem.toLowerCase().replace(punctuation, '');
+
+    return existingItem === newItem;
+  });
+
+  return filteredList.length > 0 ? false + console.log('Error!') : true;
 };
