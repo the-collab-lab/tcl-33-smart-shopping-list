@@ -22,24 +22,34 @@ function App() {
     setToken(newToken);
   };
 
+  const shareToken = (token) => {
+    localStorage.setItem('Token', token);
+    setToken(token);
+  };
+
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
+        <Navbar token={token} />
         <div className="container mt-2" style={{ marginTop: 40 }}>
           <Switch>
             <Route exact path="/">
               {token ? (
                 <Redirect to="/AddItem" />
               ) : (
-                <Home onSubmit={(e) => createToken(e)} />
+                <Home
+                  createToken={(e) => createToken(e)}
+                  onSharedToken={shareToken}
+                />
               )}
             </Route>
+
             <Route exact path="/AddItem">
-              <AddItem token={token} />
+              {!token ? <Redirect to="/" /> : <AddItem token={token} />}
             </Route>
+
             <Route exact path="/ViewList">
-              <ViewList token={token} />
+              {!token ? <Redirect to="/" /> : <ViewList token={token} />}
             </Route>
           </Switch>
         </div>
