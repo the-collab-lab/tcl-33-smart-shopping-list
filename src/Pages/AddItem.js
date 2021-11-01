@@ -13,7 +13,7 @@ export default function AddItem({ token }) {
     e.preventDefault();
 
     if (validateNewListItem(item, list)) {
-      setErrorMessage('Item aready exists');
+      setErrorMessage('Item already exists');
     } else {
       db.collection(token).add({
         item,
