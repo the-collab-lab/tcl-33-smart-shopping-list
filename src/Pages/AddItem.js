@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../lib/firebase';
+import ErrorMessage from '../components/ErrorMessage';
 
 export default function AddItem({ token }) {
   const [list, loading, error] = useCollection(db.collection(token));
+  const [errorMessage, setErrorMessage] = useState('');
   const [item, setItem] = useState('');
   const [urgency, setUrgency] = useState(7);
 
@@ -19,7 +21,7 @@ export default function AddItem({ token }) {
       setUrgency(7);
       setItem('');
     } else {
-      console.log('Item already exists');
+      setErrorMessage('Item aready exists');
     }
   };
 
@@ -30,6 +32,7 @@ export default function AddItem({ token }) {
           <b>Grocery item:</b>
         </label>{' '}
         <br />
+        {errorMessage && <ErrorMessage message={errorMessage} />}
         <input
           type="text"
           id="item"
@@ -82,7 +85,7 @@ export default function AddItem({ token }) {
 const validateNewListItem = (listItem, list) => {
   const punctuation = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g;
 
-  const filteredList = list.docs.filter((filteredItem) => {
+  const filteredList = list.docs.find((filteredItem) => {
     const existingItem = filteredItem
       .data()
       .item.toLowerCase()
@@ -93,5 +96,5 @@ const validateNewListItem = (listItem, list) => {
     return existingItem === newItem;
   });
 
-  return filteredList.length > 0 ? false + console.log('Error!') : true;
+  return filteredList.length > 0;
 };
