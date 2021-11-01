@@ -13,8 +13,6 @@ export default function AddItem({ token }) {
     e.preventDefault();
 
     if (validateNewListItem(item, list)) {
-      setErrorMessage('Item already exists');
-    } else {
       db.collection(token).add({
         item,
         urgency,
@@ -22,6 +20,8 @@ export default function AddItem({ token }) {
       });
       setUrgency(7);
       setItem('');
+    } else {
+      setErrorMessage('Item already exists');
     }
   };
 
@@ -97,5 +97,5 @@ const validateNewListItem = (listItem, list) => {
     return existingItem === newItem;
   });
 
-  return !!duplicateItem;
+  return !duplicateItem;
 };
