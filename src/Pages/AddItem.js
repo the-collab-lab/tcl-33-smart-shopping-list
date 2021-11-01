@@ -13,6 +13,8 @@ export default function AddItem({ token }) {
     e.preventDefault();
 
     if (validateNewListItem(item, list)) {
+      setErrorMessage('Item aready exists');
+    } else {
       db.collection(token).add({
         item,
         urgency,
@@ -20,8 +22,6 @@ export default function AddItem({ token }) {
       });
       setUrgency(7);
       setItem('');
-    } else {
-      setErrorMessage('Item aready exists');
     }
   };
 
@@ -85,16 +85,17 @@ export default function AddItem({ token }) {
 const validateNewListItem = (listItem, list) => {
   const punctuation = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g;
 
-  const filteredList = list.docs.find((filteredItem) => {
-    const existingItem = filteredItem
+  const duplicateItem = list.docs.find((duplicate) => {
+    const existingItem = duplicate
       .data()
       .item.toLowerCase()
       .replace(punctuation, '');
 
     const newItem = listItem.toLowerCase().replace(punctuation, '');
+    console.log(newItem);
 
     return existingItem === newItem;
   });
 
-  return filteredList.length > 0;
+  return !!duplicateItem;
 };
