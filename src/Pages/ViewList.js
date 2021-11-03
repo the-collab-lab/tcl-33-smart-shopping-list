@@ -1,6 +1,7 @@
 import React from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../lib/firebase';
+import FilterList from '../components/FilterList';
 
 const ViewList = ({ token }) => {
   // if (token === null) token = 'default';
@@ -10,6 +11,8 @@ const ViewList = ({ token }) => {
   return (
     <div>
       <h2>Grocery List</h2>
+
+      <FilterList />
 
       {error && <strong>Error: {JSON.stringify(error)}</strong>}
       {loading && <span>Collection: Loading...</span>}
