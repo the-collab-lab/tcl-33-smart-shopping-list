@@ -28,6 +28,7 @@ function App() {
     setToken(token);
   };
 
+  // I think we should rename this function to something more specific
   const handleChange = (e) => {
     console.log(e.target.value);
     if (checked[e.target.value]) {

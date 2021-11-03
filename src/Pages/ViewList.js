@@ -21,16 +21,15 @@ const List = ({ token, handleChange, checked }) => {
     return (
       <>
         {error && <strong>Error: {JSON.stringify(error)}</strong>}
-        {loading && <span>Collection: Loading...</span>}
+        {loading && <span>Loading...</span>}
         {list && (
           <ul>
-            <b>Collection: </b>
             {list.docs.map((doc) => (
               <li type="checkbox" key={doc.id}>
                 <input
                   type="checkbox"
                   onChange={handleChange}
-                  checked={checked}
+                  checked={checked[doc.id]}
                   value={doc.id}
                 />{' '}
                 {JSON.stringify(doc.data().item)}
