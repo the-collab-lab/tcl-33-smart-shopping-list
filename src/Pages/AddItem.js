@@ -1,19 +1,28 @@
 import React, { useState } from 'react';
+import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../lib/firebase';
+import ErrorMessage from '../components/ErrorMessage';
 
 export default function AddItem({ token }) {
+  const [list, loading, error] = useCollection(db.collection(token));
+  const [errorMessage, setErrorMessage] = useState('');
   const [item, setItem] = useState('');
   const [urgency, setUrgency] = useState(7);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    db.collection(token).add({
-      item,
-      urgency,
-      lastPurchased: null,
-    });
-    setUrgency(7);
-    setItem('');
+
+    if (validateNewListItem(item, list)) {
+      db.collection(token).add({
+        item,
+        urgency,
+        lastPurchased: null,
+      });
+      setUrgency(7);
+      setItem('');
+    } else {
+      setErrorMessage('Item already exists');
+    }
   };
 
   return (
@@ -23,6 +32,7 @@ export default function AddItem({ token }) {
           <b>Grocery item:</b>
         </label>{' '}
         <br />
+        {errorMessage && <ErrorMessage message={errorMessage} />}
         <input
           type="text"
           id="item"
@@ -72,3 +82,20 @@ export default function AddItem({ token }) {
     </div>
   );
 }
+const validateNewListItem = (listItem, list) => {
+  const punctuation = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g;
+
+  const duplicateItem = list.docs.find((duplicate) => {
+    const existingItem = duplicate
+      .data()
+      .item.toLowerCase()
+      .replace(punctuation, '');
+
+    const newItem = listItem.toLowerCase().replace(punctuation, '');
+    console.log(newItem);
+
+    return existingItem === newItem;
+  });
+
+  return !duplicateItem;
+};
