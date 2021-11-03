@@ -13,6 +13,7 @@ const ViewList = ({ token }) => {
       <h2>Grocery List</h2>
 
       <FilterList />
+      {/*  */}
 
       {error && <strong>Error: {JSON.stringify(error)}</strong>}
       {loading && <span>Collection: Loading...</span>}
