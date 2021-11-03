@@ -35,7 +35,7 @@ function App() {
           <Switch>
             <Route exact path="/">
               {token ? (
-                <Redirect to="/AddItem" />
+                <Redirect to="/ViewList" />
               ) : (
                 <Home
                   createToken={(e) => createToken(e)}
