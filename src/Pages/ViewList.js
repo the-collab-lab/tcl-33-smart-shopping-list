@@ -15,6 +15,18 @@ const ViewList = ({ token, handleChange, checked }) => {
 const List = ({ token, handleChange, checked }) => {
   const [list, loading, error] = useCollection(db.collection(token));
 
+  const timeElapsed = (doc) => {
+    const checkedTime = doc.data().lastPurchased.toDate();
+    // to return the date number(1-31) for the specified date
+    console.log('checkedTime => ', checkedTime);
+    let tomorrow = new Date();
+    tomorrow.setDate(checkedTime.getDate() + 0.0000001);
+    //returns the tomorrow date
+    console.log('tomorrow => ', tomorrow);
+
+    return tomorrow > checkedTime;
+  };
+
   if (!loading && list.docs.length === 0) {
     return <EmptyListPrompt />;
   } else {
@@ -25,13 +37,17 @@ const List = ({ token, handleChange, checked }) => {
         {list && (
           <ul>
             {list.docs.map((doc) => (
-              <li type="checkbox" key={doc.id}>
+              <li key={doc.id}>
                 <input
                   type="checkbox"
                   onChange={handleChange}
-                  checked={checked[doc.id]}
+                  checked={timeElapsed(doc)}
                   value={doc.id}
                 />{' '}
+                {console.log(
+                  '24 hours has passed: ',
+                  doc.data().lastPurchased.toDate() < new Date(),
+                )}
                 {JSON.stringify(doc.data().item)}
               </li>
             ))}

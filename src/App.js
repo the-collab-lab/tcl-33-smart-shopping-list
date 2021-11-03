@@ -6,9 +6,13 @@ import Home from './Pages/Home';
 import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom';
 import './App.css';
 import AddItem from './Pages/AddItem';
+import { db } from './lib/firebase';
 
 function App() {
   const [token, setToken] = useState(null);
+
+  // I don't think we even need to keep this in state
+  // Just keep track of it by comparing the last purchased date to current date.(since firebase automatically refreshes)
   const [checked, setChecked] = useState({});
 
   useEffect(() => {
@@ -30,11 +34,22 @@ function App() {
 
   // I think we should rename this function to something more specific
   const handleChange = (e) => {
-    console.log(e.target.value);
     if (checked[e.target.value]) {
       console.log('exists');
     } else {
       checked[e.target.value] = true;
+      db.collection(token)
+        .doc(e.target.value)
+        .update({
+          lastPurchased: new Date(),
+        })
+        .then(() => {
+          console.log('Document successfully updated!');
+        })
+        .catch((error) => {
+          // The document probably doesn't exist.
+          console.error('Error updating document: ', error);
+        });
     }
   };
 
