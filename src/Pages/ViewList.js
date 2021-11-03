@@ -17,7 +17,9 @@ const ViewList = ({ token }) => {
         <ul>
           <b>Collection: </b>
           {list.docs.map((doc) => (
-            <li key={doc.id}>{JSON.stringify(doc.data().item)} </li>
+            <li type="checkbox" key={doc.id}>
+              <input type="checkbox" /> {JSON.stringify(doc.data().item)}
+            </li>
           ))}
         </ul>
       )}
