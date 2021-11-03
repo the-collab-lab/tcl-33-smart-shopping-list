@@ -15,7 +15,7 @@ const ViewList = ({ token }) => {
 const List = ({ token }) => {
   const [list, loading, error] = useCollection(db.collection(token));
 
-  if (list.docs.length === 0 && !loading) {
+  if (!loading && list.docs.length === 0) {
     return <EmptyListPrompt />;
   } else {
     return (
