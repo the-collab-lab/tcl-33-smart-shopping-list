@@ -6,7 +6,6 @@ import Home from './Pages/Home';
 import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom';
 import './App.css';
 import AddItem from './Pages/AddItem';
-import EmptyListPrompt from './components/EmptyListPrompt';
 
 function App() {
   const [token, setToken] = useState(null);
