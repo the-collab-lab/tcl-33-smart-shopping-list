@@ -46,7 +46,7 @@ const List = ({ token, checkItem }) => {
                 <input
                   type="checkbox"
                   onChange={() => handleChange(doc)}
-                  checked={!expired(doc)}
+                  checked={expired(doc)}
                   value={doc.id}
                 />{' '}
                 {JSON.stringify(doc.data().item)}
