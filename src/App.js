@@ -11,10 +11,6 @@ import { db } from './lib/firebase';
 function App() {
   const [token, setToken] = useState(null);
 
-  // I don't think we even need to keep this in state
-  // Just keep track of it by comparing the last purchased date to current date.(since firebase automatically refreshes)
-  const [checked, setChecked] = useState({});
-
   useEffect(() => {
     const user = localStorage.getItem('Token');
     user && setToken(user);
@@ -33,24 +29,19 @@ function App() {
   };
 
   // I think we should rename this function to something more specific
-  const handleChange = (e) => {
-    if (checked[e.target.value]) {
-      console.log('exists');
-    } else {
-      checked[e.target.value] = true;
-      db.collection(token)
-        .doc(e.target.value)
-        .update({
-          lastPurchased: new Date(),
-        })
-        .then(() => {
-          console.log('Document successfully updated!');
-        })
-        .catch((error) => {
-          // The document probably doesn't exist.
-          console.error('Error updating document: ', error);
-        });
-    }
+  const checkItem = (doc) => {
+    db.collection(token)
+      .doc(doc.id)
+      .update({
+        lastPurchased: new Date(),
+      })
+      .then(() => {
+        console.log('Document successfully updated!');
+      })
+      .catch((error) => {
+        // The document probably doesn't exist.
+        console.error('Error updating document: ', error);
+      });
   };
 
   return (
@@ -78,11 +69,7 @@ function App() {
               {!token ? (
                 <Redirect to="/" />
               ) : (
-                <ViewList
-                  token={token}
-                  handleChange={handleChange}
-                  checked={checked}
-                />
+                <ViewList token={token} checkItem={checkItem} />
               )}
             </Route>
           </Switch>
