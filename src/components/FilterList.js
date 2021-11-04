@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { firestore } from '../lib/firebase';
+import { useCollection } from 'react-firebase-hooks/firestore';
+
 let arrString = ['fruit', 'vegetables', 'water', 'legumes'];
 const FilterList = () => {
   const [value, setValue] = useState('');
@@ -43,7 +46,7 @@ const FilterList = () => {
           id="filter-list"
           value={value}
           onChange={handleChange}
-          placeholder="Enter your item"
+          placeholder="Filter list"
         />
         {/* <button onClick={handleReset}>Reset</button> */}
       </form>
