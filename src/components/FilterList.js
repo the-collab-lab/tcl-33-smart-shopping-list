@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 let arrString = ['fruit', 'vegetables', 'water', 'legumes'];
 const FilterList = () => {
   const [value, setValue] = useState('');
