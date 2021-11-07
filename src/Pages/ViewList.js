@@ -9,13 +9,31 @@ const ViewList = ({ token }) => {
   const [list, loading, error] = useCollection(db.collection(token));
 
   const [inputValue, setInputValue] = useState('');
-
-  // const filteredItems = list.docs.filter(doc => doc.data().item.includes(inputValue))
+  const [matchValue, setMatchValue] = useState([]);
 
   const handleChange = (e) => {
-    console.log('handle change fired');
+    e.preventDefault();
     setInputValue(e.target.value);
+    //     if (inputValue) {
+    //     findMatches()
+    //     console.log(matchValue)
+    //   } else {
+    //     console.log("input not set yet")
+    // };
   };
+
+  const findMatches = () => {
+    let matches = list.docs.map((doc) => doc.data().item);
+    let matchesArray = JSON.stringify(matches).split(' ');
+    let filteredMatchesArray = matchesArray.filter((match) =>
+      match.includes(inputValue),
+    );
+    setMatchValue(filteredMatchesArray);
+    console.log(
+      `this is our matchesArray ${filteredMatchesArray} and this is our input ${inputValue}`,
+    );
+  };
+
   /* ******************************************* */
 
   return (
@@ -41,20 +59,22 @@ const ViewList = ({ token }) => {
 
       {error && <strong>Error: {JSON.stringify(error)}</strong>}
       {loading && <span>Collection: Loading...</span>}
-      {list && inputValue ? (
+      {list && !inputValue ? (
         <ul>
           {/* list.docs.filter(docs => docs.data().item.includes(inputValue).map(filteredItem => )) */}
           {list.docs.map((doc) => (
             <li key={doc.id} style={{ listStyleType: 'none' }}>
-              {JSON.stringify(doc.item)}
-              {console.log(inputValue)}
+              {doc.data().item}
+              {/* {`this is our matchValue: ${matchValue}`} */}
               {/* {JSON.stringify(filteredItems)} */}
               {console.log(JSON.stringify(doc.data().item))}{' '}
+              {/* {console.log("this is " + doc.data().item)} */}
             </li>
           ))}
         </ul>
       ) : (
-        console.log('there is no inputValue')
+        { matchValue }
+        // console.log("this is the input value " + inputValue)
       )}
     </div>
   );
