@@ -3,17 +3,34 @@ import { useCollection } from 'react-firebase-hooks/firestore';
 import EmptyListPrompt from '../components/EmptyListPrompt';
 import { db } from '../lib/firebase';
 
-const ViewList = ({ token, handleChange, checked }) => {
+const ViewList = ({ token, checkItem, checked }) => {
   return (
     <div>
       <h2>Grocery List</h2>
-      <List token={token} handleChange={handleChange} checked={checked} />
+      <List token={token} checkItem={checkItem} checked={checked} />
     </div>
   );
 };
 
-const List = ({ token, handleChange, checked }) => {
+const List = ({ token, checkItem }) => {
   const [list, loading, error] = useCollection(db.collection(token));
+
+  const handleChange = (doc) => {
+    if (expired(doc)) {
+      checkItem(doc);
+    }
+  };
+
+  const expired = (doc) => {
+    if (doc.data().lastPurchased === null) return false;
+
+    const checkedTime = doc.data().lastPurchased.toDate();
+    let expireTime = new Date();
+
+    expireTime.setDate(checkedTime.getDate() + 1);
+
+    return expireTime < new Date();
+  };
 
   if (!loading && list.docs.length === 0) {
     return <EmptyListPrompt />;
@@ -21,16 +38,15 @@ const List = ({ token, handleChange, checked }) => {
     return (
       <>
         {error && <strong>Error: {JSON.stringify(error)}</strong>}
-        {loading && <span>Collection: Loading...</span>}
+        {loading && <span>Loading...</span>}
         {list && (
           <ul>
-            <b>Collection: </b>
             {list.docs.map((doc) => (
-              <li type="checkbox" key={doc.id}>
+              <li key={doc.id}>
                 <input
                   type="checkbox"
-                  onChange={handleChange}
-                  checked={checked}
+                  onChange={() => handleChange(doc)}
+                  checked={expired(doc)}
                   value={doc.id}
                 />{' '}
                 {JSON.stringify(doc.data().item)}

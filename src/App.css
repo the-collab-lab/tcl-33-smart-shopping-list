@@ -11,6 +11,10 @@
   bottom: 0;
 } */
 
+ul {
+  list-style-type: none;
+}
+
 .prompt {
   border: #333333;
   border-style: solid;
