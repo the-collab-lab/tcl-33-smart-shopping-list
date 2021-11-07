@@ -1,4 +1,4 @@
-import { doc } from 'prettier';
+// import { doc } from 'prettier';
 import React, { useState } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../lib/firebase';
@@ -9,7 +9,6 @@ const ViewList = ({ token }) => {
   const [list, loading, error] = useCollection(db.collection(token));
 
   const [inputValue, setInputValue] = useState('');
-  // const [matchValue, setMatchValue] = useState([]);
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -20,8 +19,6 @@ const ViewList = ({ token }) => {
   return (
     <div>
       <h2>Grocery List</h2>
-
-      {/* FILTER LIST RENDERING */}
       <div>
         <form action="#">
           <label htmlFor="filter-list" style={{ display: 'hidden' }}>
@@ -51,16 +48,20 @@ const ViewList = ({ token }) => {
         </ul>
       ) : (
         <ul>
-          {list.docs.map((doc) => (
+          <li style={{ listStyleType: 'none' }}>Input is {inputValue}</li>
+          {/* {list.docs.map((doc) => ( 
             <li key={doc.id} style={{ listStyleType: 'none' }}>
-              {doc
+              All list items = {list.docs.map((doc) => doc.data().item )}
+               {doc
                 .data()
-                .item.split(' ')
-                .filter((thing) =>
-                  thing.toLowerCase().includes(inputValue.toLowerCase()),
-                )}
-            </li>
-          ))}
+                .item 
+                 .split(' ')
+                 .filter((thing) =>
+                 thing.toLowerCase()
+                 .includes(inputValue.toLowerCase()))
+                  }
+           </li>
+           ))} */}
         </ul>
       )}
     </div>
