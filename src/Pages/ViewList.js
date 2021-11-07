@@ -22,13 +22,12 @@ const List = ({ token, checkItem }) => {
   };
 
   const expired = (doc) => {
-    if (doc.data().lastPurchased === null) return false;
+    if (doc.data().lastPurchased === null) return true;
 
     const checkedTime = doc.data().lastPurchased.toDate();
-    let expireTime = new Date();
+    let expireTime = checkedTime;
 
     expireTime.setDate(checkedTime.getDate() + 1);
-
     return expireTime < new Date();
   };
 
@@ -46,7 +45,7 @@ const List = ({ token, checkItem }) => {
                 <input
                   type="checkbox"
                   onChange={() => handleChange(doc)}
-                  checked={expired(doc)}
+                  checked={!expired(doc)}
                   value={doc.id}
                 />{' '}
                 {JSON.stringify(doc.data().item)}
