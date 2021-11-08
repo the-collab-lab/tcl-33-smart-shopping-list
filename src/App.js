@@ -6,6 +6,7 @@ import Home from './Pages/Home';
 import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom';
 import './App.css';
 import AddItem from './Pages/AddItem';
+import { db } from './lib/firebase';
 
 function App() {
   const [token, setToken] = useState(null);
@@ -25,6 +26,22 @@ function App() {
   const shareToken = (token) => {
     localStorage.setItem('Token', token);
     setToken(token);
+  };
+
+  // I think we should rename this function to something more specific
+  const checkItem = (doc) => {
+    db.collection(token)
+      .doc(doc.id)
+      .update({
+        lastPurchased: new Date(),
+      })
+      .then(() => {
+        console.log('Document successfully updated!');
+      })
+      .catch((error) => {
+        // The document probably doesn't exist.
+        console.error('Error updating document: ', error);
+      });
   };
 
   return (
@@ -49,7 +66,11 @@ function App() {
             </Route>
 
             <Route exact path="/ViewList">
-              {!token ? <Redirect to="/" /> : <ViewList token={token} />}
+              {!token ? (
+                <Redirect to="/" />
+              ) : (
+                <ViewList token={token} checkItem={checkItem} />
+              )}
             </Route>
           </Switch>
         </div>
