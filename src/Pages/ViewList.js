@@ -3,15 +3,13 @@ import React, { useState } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../lib/firebase';
 
-
 const ViewList = ({ token }) => {
   // if (token === null) token = 'default';
- 
+
   //{someArray.map((val, i) => <input onChange={e => handleInput(e, i)}></input>)}
   //create  <input> elements and specify their name attributes
 
   const [list, loading, error] = useCollection(db.collection(token));
-
 
   //const [filter, setFilter] =useState;
   const [inputValue, setInputValue] = useState('');
@@ -43,7 +41,7 @@ const ViewList = ({ token }) => {
 
       {error && <strong>Error: {JSON.stringify(error)}</strong>}
       {loading && <span>Collection: Loading...</span>}
-      {list && !inputValue ? (
+      {!loading && list && !inputValue && (
         <ul>
           {list.docs.map((doc) => (
             <li key={doc.id} style={{ listStyleType: 'none' }}>
@@ -52,22 +50,23 @@ const ViewList = ({ token }) => {
             </li>
           ))}
         </ul>
-      ) : (
+      )}
+
+      {!loading && list && inputValue && (
         <ul>
+          <li>this is the new list</li>
           <li style={{ listStyleType: 'none' }}>Input is {inputValue}</li>
-          {/* {list.docs.map((doc) => ( 
+          {list.docs.map((doc) => (
             <li key={doc.id} style={{ listStyleType: 'none' }}>
-              All list items = {list.docs.map((doc) => doc.data().item )}
-               {doc
+              All list items = {list.docs.map((doc) => doc.data().item)}
+              {doc
                 .data()
-                .item 
-                 .split(' ')
-                 .filter((thing) =>
-                 thing.toLowerCase()
-                 .includes(inputValue.toLowerCase()))
-                  }
-           </li>
-           ))} */}
+                .item.split(' ')
+                .filter((thing) =>
+                  thing.toLowerCase().includes(inputValue.toLowerCase()),
+                )}
+            </li>
+          ))}
         </ul>
       )}
     </div>
