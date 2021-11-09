@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { getToken, words } from '@the-collab-lab/shopping-list-utils';
+import {
+  getToken,
+  words,
+  calculateEstimate,
+} from '@the-collab-lab/shopping-list-utils';
 import ViewList from './Pages/ViewList';
 import Navbar from './components/Navbar';
 import Home from './Pages/Home';
@@ -10,6 +14,8 @@ import { db } from './lib/firebase';
 
 function App() {
   const [token, setToken] = useState(null);
+
+  // console.log(calculateEstimate(urgency, daysSinceLastTransaction, timesPurchase))
 
   useEffect(() => {
     const user = localStorage.getItem('Token');
