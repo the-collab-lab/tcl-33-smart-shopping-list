@@ -3,11 +3,17 @@ import React, { useState } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../lib/firebase';
 
+
 const ViewList = ({ token }) => {
   // if (token === null) token = 'default';
+ 
+  //{someArray.map((val, i) => <input onChange={e => handleInput(e, i)}></input>)}
+  //create  <input> elements and specify their name attributes
 
   const [list, loading, error] = useCollection(db.collection(token));
 
+
+  //const [filter, setFilter] =useState;
   const [inputValue, setInputValue] = useState('');
 
   const handleChange = (e) => {
