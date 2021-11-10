@@ -54,16 +54,16 @@ const ViewList = ({ token }) => {
 
       {!loading && list && inputValue && (
         <ul>
-          <li>this is the new list</li>
+          <li style={{ listStyleType: 'none' }}>this is the new list</li>
           <li style={{ listStyleType: 'none' }}>Input is {inputValue}</li>
           {list.docs.map((doc) => (
             <li key={doc.id} style={{ listStyleType: 'none' }}>
-              All list items = {list.docs.map((doc) => doc.data().item)}
+              {/* All list items = {list.docs.map((doc) => doc.data().item)} */}
               {doc
                 .data()
                 .item.split(' ')
-                .filter((thing) =>
-                  thing.toLowerCase().includes(inputValue.toLowerCase()),
+                .filter((word) =>
+                  word.toLowerCase().includes(inputValue.toLowerCase()),
                 )}
             </li>
           ))}
