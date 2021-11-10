@@ -1,22 +1,15 @@
-// import { doc } from 'prettier';
 import React, { useState } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../lib/firebase';
 
 const ViewList = ({ token }) => {
-  // if (token === null) token = 'default';
-
-  //{someArray.map((val, i) => <input onChange={e => handleInput(e, i)}></input>)}
-  //create  <input> elements and specify their name attributes
-
   const [list, loading, error] = useCollection(db.collection(token));
 
-  //const [filter, setFilter] =useState;
-  const [inputValue, setInputValue] = useState('');
+  const [filterValue, setFilterValue] = useState('');
 
-  const handleChange = (e) => {
+  const handleFilterChange = (e) => {
     e.preventDefault();
-    setInputValue(e.target.value);
+    setFilterValue(e.target.value);
   };
 
   return (
@@ -31,8 +24,8 @@ const ViewList = ({ token }) => {
           <input
             type="search"
             id="filter-list"
-            value={inputValue}
-            onChange={handleChange}
+            value={filterValue}
+            onChange={handleFilterChange}
             placeholder="Enter your item"
           />
         </form>
@@ -40,7 +33,7 @@ const ViewList = ({ token }) => {
 
       {error && <strong>Error: {JSON.stringify(error)}</strong>}
       {loading && <span>Collection: Loading...</span>}
-      {!loading && list && !inputValue && (
+      {!loading && list && !filterValue && (
         <ul>
           {list.docs.map((doc) => (
             <li key={doc.id} style={{ listStyleType: 'none' }}>
@@ -50,7 +43,7 @@ const ViewList = ({ token }) => {
         </ul>
       )}
 
-      {!loading && list && inputValue && (
+      {!loading && list && filterValue && (
         <ul>
           {list.docs.map((doc) => (
             <li key={doc.id} style={{ listStyleType: 'none' }}>
@@ -58,7 +51,7 @@ const ViewList = ({ token }) => {
                 .data()
                 .item.split(' ')
                 .filter((word) =>
-                  word.toLowerCase().includes(inputValue.toLowerCase()),
+                  word.toLowerCase().includes(filterValue.toLowerCase()),
                 )}
             </li>
           ))}
