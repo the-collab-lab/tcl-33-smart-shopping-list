@@ -16,7 +16,6 @@ const ViewList = ({ token }) => {
 
   const handleChange = (e) => {
     e.preventDefault();
-    console.log('handle change fired');
     setInputValue(e.target.value);
   };
 
@@ -45,8 +44,7 @@ const ViewList = ({ token }) => {
         <ul>
           {list.docs.map((doc) => (
             <li key={doc.id} style={{ listStyleType: 'none' }}>
-              {doc.data().item}
-              {console.log(JSON.stringify(doc.data().item))}{' '}
+              {doc.data().item}{' '}
             </li>
           ))}
         </ul>
@@ -54,11 +52,8 @@ const ViewList = ({ token }) => {
 
       {!loading && list && inputValue && (
         <ul>
-          <li style={{ listStyleType: 'none' }}>this is the new list</li>
-          <li style={{ listStyleType: 'none' }}>Input is {inputValue}</li>
           {list.docs.map((doc) => (
             <li key={doc.id} style={{ listStyleType: 'none' }}>
-              {/* All list items = {list.docs.map((doc) => doc.data().item)} */}
               {doc
                 .data()
                 .item.split(' ')
