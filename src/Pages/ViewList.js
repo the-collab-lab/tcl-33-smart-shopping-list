@@ -17,9 +17,7 @@ const ViewList = ({ token }) => {
       <h2>Grocery List</h2>
       <div>
         <form action="#">
-          <label htmlFor="filter-list" style={{ display: 'hidden' }}>
-            Filter List
-          </label>
+          <label htmlFor="filter-list">Filter List</label>
           <br />
           <input
             type="search"
@@ -33,7 +31,7 @@ const ViewList = ({ token }) => {
 
       {error && <strong>Error: {JSON.stringify(error)}</strong>}
       {loading && <span>Collection: Loading...</span>}
-      {!loading && list && !filterValue && (
+      {!loading && !error && list && !filterValue && (
         <ul>
           {list.docs.map((doc) => (
             <li key={doc.id} style={{ listStyleType: 'none' }}>
@@ -43,7 +41,7 @@ const ViewList = ({ token }) => {
         </ul>
       )}
 
-      {!loading && list && filterValue && (
+      {!loading && !error && list && filterValue && (
         <ul>
           {list.docs.map((doc) => (
             <li key={doc.id} style={{ listStyleType: 'none' }}>
