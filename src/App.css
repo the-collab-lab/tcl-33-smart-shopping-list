@@ -11,6 +11,30 @@
   bottom: 0;
 } */
 
+ul {
+  list-style-type: none;
+}
+
+.prompt {
+  border: #333333;
+  border-style: solid;
+  padding-bottom: 30px;
+  width: 25%;
+  margin-left: 530px;
+}
+
+.button {
+  font: bold 18px Arial;
+  text-decoration: none;
+  background-color: #eeeeee;
+  color: #333333;
+  padding: 15px 25px 15px 25px;
+  border-top: 1px solid #cccccc;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #cccccc;
+}
+
 .error {
   border: 1px solid;
   margin: 10px auto;

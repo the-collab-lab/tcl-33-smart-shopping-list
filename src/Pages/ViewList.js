@@ -1,8 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
+import EmptyListPrompt from '../components/EmptyListPrompt';
 import { db } from '../lib/firebase';
 
-const ViewList = ({ token }) => {
+const ViewList = ({ token, checkItem }) => {
   const [list, loading, error] = useCollection(db.collection(token));
 
   const [filterValue, setFilterValue] = useState('');
@@ -12,21 +13,25 @@ const ViewList = ({ token }) => {
     setFilterValue(e.target.value);
   };
 
-  const filteredItems = useMemo(() => {
+  const filteredDocs = useMemo(() => {
     if (loading || error || !list) {
       return [];
     }
 
-    const items = list.docs.map((doc) => doc.data().item);
-
-    return items.filter((item) => {
+    return list.docs.filter((doc) => {
       if (!filterValue) {
         return true;
       }
 
-      return item.toLowerCase().includes(filterValue.toLowerCase());
+      return doc.data().item.toLowerCase().includes(filterValue.toLowerCase());
     });
   }, [list, loading, error, filterValue]);
+
+  const handleItemCheck = (doc) => {
+    if (isExpired(doc)) {
+      checkItem(doc);
+    }
+  };
 
   return (
     <div>
@@ -45,12 +50,18 @@ const ViewList = ({ token }) => {
         </form>
       </div>
 
-      <List loading={loading} error={error} items={filteredItems} />
+      <List
+        loading={loading}
+        error={error}
+        docs={filteredDocs}
+        handleItemCheck={handleItemCheck}
+        isFiltered={!!filterValue}
+      />
     </div>
   );
 };
 
-const List = ({ loading, error, items }) => {
+const List = ({ loading, error, docs, handleItemCheck, isFiltered }) => {
   if (error) {
     return <strong>Error: {JSON.stringify(error)}</strong>;
   }
@@ -59,17 +70,37 @@ const List = ({ loading, error, items }) => {
     return <span>Collection: Loading...</span>;
   }
 
-  if (items) {
+  if (!isFiltered && docs.length === 0) {
+    return <EmptyListPrompt />;
+  }
+
+  if (docs) {
     return (
       <ul>
-        {items.map((item) => (
-          <li key={item} style={{ listStyleType: 'none' }}>
-            {item}{' '}
+        {docs.map((doc) => (
+          <li key={doc.id} style={{ listStyleType: 'none' }}>
+            <input
+              type="checkbox"
+              onChange={() => handleItemCheck(doc)}
+              checked={!isExpired(doc)}
+              value={doc.id}
+            />{' '}
+            {doc.data().item}
           </li>
         ))}
       </ul>
     );
   }
+};
+
+const isExpired = (doc) => {
+  if (doc.data().lastPurchased === null) return true;
+
+  const checkedTime = doc.data().lastPurchased.toDate();
+  let expireTime = checkedTime;
+
+  expireTime.setDate(checkedTime.getDate() + 1);
+  return expireTime < new Date();
 };
 
 export default ViewList;
