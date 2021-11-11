@@ -17,6 +17,7 @@ export default function AddItem({ token }) {
         item,
         urgency,
         lastPurchased: null,
+        timesPurchased: 0,
       });
       setUrgency(7);
       setItem('');

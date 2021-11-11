@@ -40,6 +40,7 @@ function App() {
       .doc(doc.id)
       .update({
         lastPurchased: new Date(),
+        timesPurchased: doc.data().timesPurchased + 1,
       })
       .then(() => {
         console.log('Document successfully updated!');
