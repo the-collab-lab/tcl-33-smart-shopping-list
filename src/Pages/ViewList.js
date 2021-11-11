@@ -8,7 +8,6 @@ import { db } from '../lib/firebase';
 const ViewList = ({ token, checkItem }) => {
   const [list, loading, error] = useCollection(db.collection(token));
   const [deleteButton, setDeleteButton] = useState(false);
-
   const [filterValue, setFilterValue] = useState('');
 
   const handleFilterChange = (e) => {
