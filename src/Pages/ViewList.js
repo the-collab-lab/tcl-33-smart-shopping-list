@@ -5,10 +5,11 @@ import DeletePrompt from '../components/DeletePrompt';
 import { db } from '../lib/firebase';
 import { doc } from 'prettier';
 
+//  #################### VIEW LIST COMPONENT ###################
+
 const ViewList = ({ token, checkItem }) => {
   const [list, loading, error] = useCollection(db.collection(token));
   const [deleteButton, setDeleteButton] = useState(false);
-
   const [filterValue, setFilterValue] = useState('');
 
   const deleteItemPrompt = (e) => {
@@ -108,6 +109,8 @@ const List = ({
     );
   }
 };
+
+// ################### IS-EXPIRED FUNCTION ##################
 
 const isExpired = (doc) => {
   if (doc.data().lastPurchased === null) return true;
