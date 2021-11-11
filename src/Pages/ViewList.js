@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import EmptyListPrompt from '../components/EmptyListPrompt';
+import DeletePrompt from '../components/DeletePrompt';
 import { db } from '../lib/firebase';
 
 const ViewList = ({ token, checkItem, checked }) => {
@@ -14,11 +15,16 @@ const ViewList = ({ token, checkItem, checked }) => {
 
 const List = ({ token, checkItem }) => {
   const [list, loading, error] = useCollection(db.collection(token));
+  const [deleteButton, setDeleteButton] = useState(false);
 
   const handleChange = (doc) => {
     if (expired(doc)) {
       checkItem(doc);
     }
+  };
+
+  const promptDelete = (e) => {
+    setDeleteButton(true);
   };
 
   const expired = (doc) => {
@@ -37,6 +43,7 @@ const List = ({ token, checkItem }) => {
     return (
       <>
         {error && <strong>Error: {JSON.stringify(error)}</strong>}
+        {deleteButton ? <DeletePrompt /> : null}
         {loading && <span>Loading...</span>}
         {list && (
           <ul>
@@ -49,6 +56,7 @@ const List = ({ token, checkItem }) => {
                   value={doc.id}
                 />{' '}
                 {JSON.stringify(doc.data().item)}
+                <button onClick={promptDelete}>Delete</button>
               </li>
             ))}
           </ul>
