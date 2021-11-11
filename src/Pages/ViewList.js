@@ -3,6 +3,7 @@ import { useCollection } from 'react-firebase-hooks/firestore';
 import EmptyListPrompt from '../components/EmptyListPrompt';
 import DeletePrompt from '../components/DeletePrompt';
 import { db } from '../lib/firebase';
+import { doc } from 'prettier';
 
 const ViewList = ({ token, checkItem, checked }) => {
   return (
@@ -43,7 +44,7 @@ const List = ({ token, checkItem }) => {
     return (
       <>
         {error && <strong>Error: {JSON.stringify(error)}</strong>}
-        {deleteButton ? <DeletePrompt /> : null}
+        {deleteButton ? <DeletePrompt token={token} doc /> : null}
         {loading && <span>Loading...</span>}
         {list && (
           <ul>
