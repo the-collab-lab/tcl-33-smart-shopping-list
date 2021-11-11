@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import EmptyListPrompt from '../components/EmptyListPrompt';
 import { db } from '../lib/firebase';
+import estimatedTime from '../lib/estimate';
 
 const ViewList = ({ token, checkItem, checked }) => {
   return (
@@ -26,6 +27,8 @@ const List = ({ token, checkItem }) => {
 
     const checkedTime = doc.data().lastPurchased.toDate();
     let expireTime = checkedTime;
+
+    console.log(estimatedTime(doc));
 
     expireTime.setDate(checkedTime.getDate() + 1);
     return expireTime < new Date();

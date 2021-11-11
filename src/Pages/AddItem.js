@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../lib/firebase';
 import ErrorMessage from '../components/ErrorMessage';
+import estimatedTime from '../lib/estimate';
 
 export default function AddItem({ token }) {
   const [list, loading, error] = useCollection(db.collection(token));
