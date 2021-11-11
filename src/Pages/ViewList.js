@@ -1,70 +1,122 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import EmptyListPrompt from '../components/EmptyListPrompt';
 import DeletePrompt from '../components/DeletePrompt';
 import { db } from '../lib/firebase';
 import { doc } from 'prettier';
 
-const ViewList = ({ token, checkItem, checked }) => {
-  return (
-    <div>
-      <h2>Grocery List</h2>
-      <List token={token} checkItem={checkItem} checked={checked} />
-    </div>
-  );
-};
-
-const List = ({ token, checkItem }) => {
+const ViewList = ({ token, checkItem }) => {
   const [list, loading, error] = useCollection(db.collection(token));
   const [deleteButton, setDeleteButton] = useState(false);
 
-  const handleChange = (doc) => {
-    if (expired(doc)) {
+  const [filterValue, setFilterValue] = useState('');
+
+  const deleteItemPrompt = (e) => {
+    setDeleteButton(true);
+  };
+
+  const handleFilterChange = (e) => {
+    e.preventDefault();
+    setFilterValue(e.target.value);
+  };
+
+  const filteredDocs = useMemo(() => {
+    if (loading || error || !list) {
+      return [];
+    }
+
+    return list.docs.filter((doc) => {
+      if (!filterValue) {
+        return true;
+      }
+
+      return doc.data().item.toLowerCase().includes(filterValue.toLowerCase());
+    });
+  }, [list, loading, error, filterValue]);
+
+  const handleItemCheck = (doc) => {
+    if (isExpired(doc)) {
       checkItem(doc);
     }
   };
 
-  const promptDelete = (e) => {
-    setDeleteButton(true);
-  };
+  return (
+    <div>
+      <h2>Grocery List</h2>
+      <div>
+        <form action="#">
+          <label htmlFor="filter-list">Filter List</label>
+          <br />
+          <input
+            type="search"
+            id="filter-list"
+            value={filterValue}
+            onChange={handleFilterChange}
+            placeholder="Enter your item"
+          />
+        </form>
+      </div>
+      {deleteButton ? <DeletePrompt /> : null}
+      <List
+        loading={loading}
+        error={error}
+        docs={filteredDocs}
+        handleItemCheck={handleItemCheck}
+        isFiltered={!!filterValue}
+        deleteItemPrompt={deleteItemPrompt}
+      />
+    </div>
+  );
+};
 
-  const expired = (doc) => {
-    if (doc.data().lastPurchased === null) return true;
+const List = ({
+  loading,
+  error,
+  docs,
+  handleItemCheck,
+  isFiltered,
+  deleteItemPrompt,
+}) => {
+  if (error) {
+    return <strong>Error: {JSON.stringify(error)}</strong>;
+  }
 
-    const checkedTime = doc.data().lastPurchased.toDate();
-    let expireTime = checkedTime;
+  if (loading) {
+    return <span>Collection: Loading...</span>;
+  }
 
-    expireTime.setDate(checkedTime.getDate() + 1);
-    return expireTime < new Date();
-  };
-
-  if (!loading && list.docs.length === 0) {
+  if (!isFiltered && docs.length === 0) {
     return <EmptyListPrompt />;
-  } else {
+  }
+
+  if (docs) {
     return (
-      <>
-        {error && <strong>Error: {JSON.stringify(error)}</strong>}
-        {deleteButton ? <DeletePrompt token={token} doc /> : null}
-        {loading && <span>Loading...</span>}
-        {list && (
-          <ul>
-            {list.docs.map((doc) => (
-              <li key={doc.id}>
-                <input
-                  type="checkbox"
-                  onChange={() => handleChange(doc)}
-                  checked={!expired(doc)}
-                  value={doc.id}
-                />{' '}
-                {JSON.stringify(doc.data().item)}
-                <button onClick={promptDelete}>Delete</button>
-              </li>
-            ))}
-          </ul>
-        )}
-      </>
+      <ul>
+        {docs.map((doc) => (
+          <li key={doc.id} style={{ listStyleType: 'none' }}>
+            <input
+              type="checkbox"
+              onChange={() => handleItemCheck(doc)}
+              checked={!isExpired(doc)}
+              value={doc.id}
+            />{' '}
+            {doc.data().item}
+            <button onClick={deleteItemPrompt}>Delete</button>
+          </li>
+        ))}
+      </ul>
     );
   }
+};
+
+const isExpired = (doc) => {
+  if (doc.data().lastPurchased === null) return true;
+
+  const checkedTime = doc.data().lastPurchased.toDate();
+  let expireTime = checkedTime;
+
+  expireTime.setDate(checkedTime.getDate() + 1);
+  return expireTime < new Date();
 };
 
 export default ViewList;
