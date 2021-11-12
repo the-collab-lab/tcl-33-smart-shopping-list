@@ -2,6 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import EmptyListPrompt from '../components/EmptyListPrompt';
 import DeletePrompt from '../components/DeletePrompt';
+import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { doc } from 'prettier';
 
@@ -14,6 +16,19 @@ const ViewList = ({ token, checkItem }) => {
 
   const deleteItemPrompt = (e) => {
     setDeleteButton(true);
+  };
+
+  //working on retrieving item value
+  const confirmDelete = (doc) => {
+    console.log(doc);
+    db.collection(token)
+      .doc(doc.id)
+      .update({
+        item: list.doc.data().FieldValue.delete(),
+      })
+      .then(() => {
+        console.log('Successfully deleted!');
+      });
   };
 
   const handleFilterChange = (e) => {
@@ -57,7 +72,7 @@ const ViewList = ({ token, checkItem }) => {
           />
         </form>
       </div>
-      {deleteButton ? <DeletePrompt /> : null}
+      {deleteButton ? <DeletePrompt confirmDelete={confirmDelete} /> : null}
       <List
         loading={loading}
         error={error}
