@@ -9,7 +9,7 @@ import { doc } from 'prettier';
 
 //  #################### VIEW LIST COMPONENT ###################
 
-const ViewList = ({ token, checkItem }) => {
+const ViewList = ({ token, checkItem, confirmDelete }) => {
   const [list, loading, error] = useCollection(db.collection(token));
   const [deleteButton, setDeleteButton] = useState(false);
   const [filterValue, setFilterValue] = useState('');
@@ -19,17 +19,17 @@ const ViewList = ({ token, checkItem }) => {
   };
 
   //working on retrieving item value
-  const confirmDelete = (doc) => {
-    console.log(doc);
-    db.collection(token)
-      .doc(doc.id)
-      .update({
-        item: list.doc.data().FieldValue.delete(),
-      })
-      .then(() => {
-        console.log('Successfully deleted!');
-      });
-  };
+  // const confirmDelete = (doc) => {
+  //   console.log(doc);
+  //   db.collection(token)
+  //     .doc(doc.id)
+  //     .update({
+  //       item: list.doc.data().FieldValue.delete(),
+  //     })
+  //     .then(() => {
+  //       console.log('Successfully deleted!');
+  //     });
+  // };
 
   const handleFilterChange = (e) => {
     e.preventDefault();
@@ -72,7 +72,9 @@ const ViewList = ({ token, checkItem }) => {
           />
         </form>
       </div>
-      {deleteButton ? <DeletePrompt confirmDelete={confirmDelete} /> : null}
+      {deleteButton ? (
+        <DeletePrompt confirmDelete={confirmDelete} doc={doc} />
+      ) : null}
       <List
         loading={loading}
         error={error}
@@ -80,6 +82,7 @@ const ViewList = ({ token, checkItem }) => {
         handleItemCheck={handleItemCheck}
         isFiltered={!!filterValue}
         deleteItemPrompt={deleteItemPrompt}
+        confirmDelete={confirmDelete}
       />
     </div>
   );
@@ -92,6 +95,7 @@ const List = ({
   handleItemCheck,
   isFiltered,
   deleteItemPrompt,
+  confirmDelete = { confirmDelete },
 }) => {
   if (error) {
     return <strong>Error: {JSON.stringify(error)}</strong>;

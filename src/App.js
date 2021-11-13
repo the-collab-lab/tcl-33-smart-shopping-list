@@ -6,10 +6,12 @@ import Home from './Pages/Home';
 import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom';
 import './App.css';
 import AddItem from './Pages/AddItem';
+// import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from './lib/firebase';
 
 function App() {
   const [token, setToken] = useState(null);
+  // const [list, loading, error] = useCollection(db.collection(token));
 
   useEffect(() => {
     const user = localStorage.getItem('Token');
@@ -44,6 +46,22 @@ function App() {
       });
   };
 
+  const confirmDelete = (doc) => {
+    console.log(db.collection(token).doc('EWkQkzHLeCmXtSSw8jTQ'));
+    db.collection(token)
+      .doc('EWkQkzHLeCmXtSSw8jTQ')
+      .get()
+      .then((doc) => {
+        console.log(doc.data().item);
+      })
+      // .then(() => {
+      //   console.log('Successfully deleted!');
+      // })
+      .catch((error) => {
+        console.error('removing document: ' + error);
+      });
+  };
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -69,7 +87,11 @@ function App() {
               {!token ? (
                 <Redirect to="/" />
               ) : (
-                <ViewList token={token} checkItem={checkItem} />
+                <ViewList
+                  token={token}
+                  checkItem={checkItem}
+                  confirmDelete={confirmDelete}
+                />
               )}
             </Route>
           </Switch>
