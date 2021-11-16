@@ -9,7 +9,7 @@ import { doc } from 'prettier';
 
 //  #################### VIEW LIST COMPONENT ###################
 
-const ViewList = ({ token, checkItem, confirmDelete }) => {
+const ViewList = ({ token, checkItem }) => {
   const [list, loading, error] = useCollection(db.collection(token));
   const [deleteButton, setDeleteButton] = useState(false);
   const [filterValue, setFilterValue] = useState('');
@@ -18,18 +18,22 @@ const ViewList = ({ token, checkItem, confirmDelete }) => {
     setDeleteButton(true);
   };
 
-  //working on retrieving item value
-  // const confirmDelete = (doc) => {
-  //   console.log(doc);
-  //   db.collection(token)
-  //     .doc(doc.id)
-  //     .update({
-  //       item: list.doc.data().FieldValue.delete(),
-  //     })
-  //     .then(() => {
-  //       console.log('Successfully deleted!');
-  //     });
-  // };
+  const confirmDelete = (doc) => {
+    console.log(doc.id);
+    // console.log(doc.id)
+    // db.collection(token)
+    //   .doc('EWkQkzHLeCmXtSSw8jTQ')
+    //   .get()
+    //   .then((doc) => {
+    //     console.log(doc.data().item);
+    //   })
+    // .then(() => {
+    //   console.log('Successfully deleted!');
+    // })
+    // .catch((error) => {
+    //   console.error('removing document: ' + error);
+    // });
+  };
 
   const handleFilterChange = (e) => {
     e.preventDefault();
@@ -72,10 +76,9 @@ const ViewList = ({ token, checkItem, confirmDelete }) => {
           />
         </form>
       </div>
-      {deleteButton ? (
-        <DeletePrompt confirmDelete={confirmDelete} doc={doc} />
-      ) : null}
+
       <List
+        deleteButton={deleteButton}
         loading={loading}
         error={error}
         docs={filteredDocs}
@@ -95,7 +98,8 @@ const List = ({
   handleItemCheck,
   isFiltered,
   deleteItemPrompt,
-  confirmDelete = { confirmDelete },
+  deleteButton,
+  confirmDelete,
 }) => {
   if (error) {
     return <strong>Error: {JSON.stringify(error)}</strong>;
@@ -111,20 +115,25 @@ const List = ({
 
   if (docs) {
     return (
-      <ul>
-        {docs.map((doc) => (
-          <li key={doc.id} style={{ listStyleType: 'none' }}>
-            <input
-              type="checkbox"
-              onChange={() => handleItemCheck(doc)}
-              checked={!isExpired(doc)}
-              value={doc.id}
-            />{' '}
-            {doc.data().item}
-            <button onClick={deleteItemPrompt}>Delete</button>
-          </li>
-        ))}
-      </ul>
+      <div>
+        {deleteButton ? (
+          <DeletePrompt confirmDelete={confirmDelete} doc={doc} />
+        ) : null}
+        <ul>
+          {docs.map((doc) => (
+            <li key={doc.id} style={{ listStyleType: 'none' }}>
+              <input
+                type="checkbox"
+                onChange={() => handleItemCheck(doc)}
+                checked={!isExpired(doc)}
+                value={doc.id}
+              />{' '}
+              {doc.data().item}
+              <button onClick={deleteItemPrompt}>Delete</button>
+            </li>
+          ))}
+        </ul>
+      </div>
     );
   }
 };
@@ -132,6 +141,7 @@ const List = ({
 // ################### IS-EXPIRED FUNCTION ##################
 
 const isExpired = (doc) => {
+  console.log(doc.id);
   if (doc.data().lastPurchased === null) return true;
 
   const checkedTime = doc.data().lastPurchased.toDate();

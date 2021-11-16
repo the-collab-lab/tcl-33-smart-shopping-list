@@ -46,22 +46,6 @@ function App() {
       });
   };
 
-  const confirmDelete = (doc) => {
-    console.log(db.collection(token).doc('EWkQkzHLeCmXtSSw8jTQ'));
-    db.collection(token)
-      .doc('EWkQkzHLeCmXtSSw8jTQ')
-      .get()
-      .then((doc) => {
-        console.log(doc.data().item);
-      })
-      // .then(() => {
-      //   console.log('Successfully deleted!');
-      // })
-      .catch((error) => {
-        console.error('removing document: ' + error);
-      });
-  };
-
   return (
     <div className="App">
       <BrowserRouter>
@@ -87,11 +71,7 @@ function App() {
               {!token ? (
                 <Redirect to="/" />
               ) : (
-                <ViewList
-                  token={token}
-                  checkItem={checkItem}
-                  confirmDelete={confirmDelete}
-                />
+                <ViewList token={token} checkItem={checkItem} />
               )}
             </Route>
           </Switch>
