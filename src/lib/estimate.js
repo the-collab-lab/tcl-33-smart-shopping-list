@@ -36,7 +36,7 @@ const estimatedTime = (doc) => {
       }
     }
     //timesPurchased??
-    const timesPurchased = data.timesPurchased + 1;
+    //const timesPurchased = data.timesPurchased + 1;
 
     //urgency
 
