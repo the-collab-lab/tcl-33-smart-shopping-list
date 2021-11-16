@@ -13,7 +13,7 @@ import React, { useState, useEffect } from 'react';
 const estimatedTime = (doc) => {
   const data = doc.data();
   if (data.timeBought) {
-    const lastPurchasedDate = new Date() - data.timeBought.toDate();
+    const timeBetweenPurchases = new Date() - data.timeBought.toDate();
     const wholeDay = 24 * 60 * 60 * 1000;
     /*    const daysSinceLastTransaction = Math.round(
         (new Date() - lastPurchasedDate) / wholeDay,
@@ -22,7 +22,7 @@ const estimatedTime = (doc) => {
 
     //if else function for daysSinceLastTransaction
 
-    if (lastPurchasedDate > wholeDay) {
+    if (timeBetweenPurchases > wholeDay) {
       //days In Between the time bought
       let daysSinceLastTransaction;
 
