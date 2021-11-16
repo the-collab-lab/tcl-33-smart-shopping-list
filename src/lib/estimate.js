@@ -45,6 +45,11 @@ const estimatedTime = (doc) => {
       this.daysSinceLastTransaction,
       data.timesPurchased,
     );
+
+    //daysuntilnextpurchase
+    //when is the next date of purchase?
+    const nextDateOfPurchase =
+      daysUntilNextPurchase + data.timeBought * wholeDay;
   }
 
   //console.log(daysUntilNextPurchase)
