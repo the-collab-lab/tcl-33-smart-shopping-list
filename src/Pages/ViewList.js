@@ -28,7 +28,7 @@ const List = ({ token, checkItem }) => {
     const checkedTime = doc.data().lastPurchased.toDate();
     let expireTime = checkedTime;
 
-    console.log(estimatedTime(doc));
+    //console.log(estimatedTime(doc));
 
     expireTime.setDate(checkedTime.getDate() + 1);
     return expireTime < new Date();

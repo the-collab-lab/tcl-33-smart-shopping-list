@@ -1,5 +1,5 @@
 import { calculateEstimate } from '@the-collab-lab/shopping-list-utils';
-
+import React, { useState, useEffect } from 'react';
 // const calculateEstimate = (
 //   urgency,
 //   daysSinceLastTransaction,
@@ -12,23 +12,47 @@ import { calculateEstimate } from '@the-collab-lab/shopping-list-utils';
 
 const estimatedTime = (doc) => {
   const data = doc.data();
-  const lastPurchasedDate = data.lastPurchased.toDate();
-  const wholeDay = 24 * 60 * 60 * 1000;
-  const daysSinceLastTransaction = Math.round(
-    (new Date() - lastPurchasedDate) / wholeDay,
-  );
-  const daysUntilNextPurchase = calculateEstimate(
-    data.urgency,
-    daysSinceLastTransaction,
-    data.timesPurchased,
-  );
+  if (data.timeBought) {
+    const lastPurchasedDate = new Date() - data.timeBought.toDate();
+    const wholeDay = 24 * 60 * 60 * 1000;
+    /*    const daysSinceLastTransaction = Math.round(
+        (new Date() - lastPurchasedDate) / wholeDay,
+      );
+  */
+
+    //if else function for daysSinceLastTransaction
+
+    if (lastPurchasedDate > wholeDay) {
+      //days In Between the time bought
+      let daysSinceLastTransaction;
+
+      if (data.lastTimePurchased) {
+        daysSinceLastTransaction = Math.round(
+          (data.timeBought.toDate() - data.lastTimePurchased.toDate()) /
+            wholeDay,
+        );
+      } else {
+        daysSinceLastTransaction = 1;
+      }
+    }
+    //timesPurchased
+    const daysUntilNextPurchase = calculateEstimate(
+      data.urgency,
+      data.daysSinceLastTransaction,
+      data.timesPurchased,
+    );
+  }
+
+  //console.log(daysUntilNextPurchase)
 
   // At this point, lastPurchasedDate was converted to nextPurchaseDate
-  lastPurchasedDate.setDate(
-    lastPurchasedDate.getDate() + daysUntilNextPurchase,
-  );
+  /*   lastPurchasedDate.setDate(
+       lastPurchasedDate.getDate() + daysUntilNextPurchase,
+     );
 
-  return lastPurchasedDate;
+       return lastPurchasedDate;
+
+    };
+   */
 };
-
 export default estimatedTime;
