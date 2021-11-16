@@ -49,7 +49,7 @@ const estimatedTime = (doc) => {
     //daysuntilnextpurchase
     //when is the next date of purchase?
     const nextDateOfPurchase =
-      daysUntilNextPurchase + data.timeBought * wholeDay;
+      data.timeBought + daysUntilNextPurchase * wholeDay;
   }
 
   //console.log(daysUntilNextPurchase)
