@@ -2,8 +2,6 @@ import React, { useState, useMemo } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import EmptyListPrompt from '../components/EmptyListPrompt';
 import DeletePrompt from '../components/DeletePrompt';
-import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { doc } from 'prettier';
 
@@ -12,27 +10,38 @@ import { doc } from 'prettier';
 const ViewList = ({ token, checkItem }) => {
   const [list, loading, error] = useCollection(db.collection(token));
   const [deleteButton, setDeleteButton] = useState(false);
+  const [yesButton, setYesButton] = useState(false);
   const [filterValue, setFilterValue] = useState('');
 
-  const deleteItemPrompt = (e) => {
-    setDeleteButton(true);
-  };
+  // const deleteItemPrompt = (doc) => {
+  //   console.log(doc.id)
+  //   setDeleteButton(true);
+
+  // };
 
   const confirmDelete = (doc) => {
     console.log(doc.id);
-    // console.log(doc.id)
-    // db.collection(token)
-    //   .doc('EWkQkzHLeCmXtSSw8jTQ')
-    //   .get()
-    //   .then((doc) => {
-    //     console.log(doc.data().item);
-    //   })
-    // .then(() => {
-    //   console.log('Successfully deleted!');
-    // })
-    // .catch((error) => {
-    //   console.error('removing document: ' + error);
-    // });
+    setDeleteButton(true);
+
+    if (yesDelete) {
+      db.collection(token)
+        .doc(doc.id)
+        .delete()
+        .then(() => {
+          console.log(doc.id + 'Successfully deleted!');
+        })
+
+        .catch((error) => {
+          console.error('removing document: ' + error);
+        });
+    } else {
+      console.log('nope');
+    }
+  };
+
+  const yesDelete = (e) => {
+    setYesButton(true);
+    console.log(e);
   };
 
   const handleFilterChange = (e) => {
@@ -84,7 +93,8 @@ const ViewList = ({ token, checkItem }) => {
         docs={filteredDocs}
         handleItemCheck={handleItemCheck}
         isFiltered={!!filterValue}
-        deleteItemPrompt={deleteItemPrompt}
+        yesDelete={yesDelete}
+        // deleteItemPrompt={deleteItemPrompt}
         confirmDelete={confirmDelete}
       />
     </div>
@@ -97,8 +107,9 @@ const List = ({
   docs,
   handleItemCheck,
   isFiltered,
-  deleteItemPrompt,
+  // deleteItemPrompt,
   deleteButton,
+  yesDelete,
   confirmDelete,
 }) => {
   if (error) {
@@ -117,7 +128,7 @@ const List = ({
     return (
       <div>
         {deleteButton ? (
-          <DeletePrompt confirmDelete={confirmDelete} doc={doc} />
+          <DeletePrompt confirmDelete={confirmDelete} yesDelete={yesDelete} />
         ) : null}
         <ul>
           {docs.map((doc) => (
@@ -129,7 +140,7 @@ const List = ({
                 value={doc.id}
               />{' '}
               {doc.data().item}
-              <button onClick={deleteItemPrompt}>Delete</button>
+              <button onClick={() => confirmDelete(doc)}>Delete</button>
             </li>
           ))}
         </ul>
@@ -141,7 +152,6 @@ const List = ({
 // ################### IS-EXPIRED FUNCTION ##################
 
 const isExpired = (doc) => {
-  console.log(doc.id);
   if (doc.data().lastPurchased === null) return true;
 
   const checkedTime = doc.data().lastPurchased.toDate();
