@@ -35,10 +35,14 @@ const estimatedTime = (doc) => {
         daysSinceLastTransaction = 1;
       }
     }
-    //timesPurchased
+    //timesPurchased??
+    const timesPurchased = data.timesPurchased + 1;
+
+    //urgency
+
     const daysUntilNextPurchase = calculateEstimate(
       data.urgency,
-      data.daysSinceLastTransaction,
+      this.daysSinceLastTransaction,
       data.timesPurchased,
     );
   }
@@ -52,7 +56,7 @@ const estimatedTime = (doc) => {
 
        return lastPurchasedDate;
 
-    };
+    
    */
 };
 export default estimatedTime;
