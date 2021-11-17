@@ -33,6 +33,11 @@ const ViewList = ({ token, checkItem }) => {
       });
   };
 
+  const noDelete = (e) => {
+    console.log('no delete');
+    setDeleteButton(false);
+  };
+
   const handleFilterChange = (e) => {
     e.preventDefault();
     setFilterValue(e.target.value);
@@ -82,6 +87,7 @@ const ViewList = ({ token, checkItem }) => {
         handleItemCheck={handleItemCheck}
         isFiltered={!!filterValue}
         yesDelete={yesDelete}
+        noDelete={noDelete}
         confirmDelete={confirmDelete}
       />
     </div>
@@ -96,6 +102,7 @@ const List = ({
   isFiltered,
   deleteButton,
   yesDelete,
+  noDelete,
   confirmDelete,
 }) => {
   if (error) {
@@ -113,7 +120,9 @@ const List = ({
   if (docs) {
     return (
       <div>
-        {deleteButton ? <DeletePrompt yesDelete={yesDelete} /> : null}
+        {deleteButton ? (
+          <DeletePrompt yesDelete={yesDelete} noDelete={noDelete} />
+        ) : null}
         <ul>
           {docs.map((doc) => (
             <li key={doc.id} style={{ listStyleType: 'none' }}>

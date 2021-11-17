@@ -1,13 +1,6 @@
 import React, { useState } from 'react';
 
-function DeletePrompt({ yesDelete }) {
-  const [deleteButton, setDeleteButton] = useState(false);
-
-  const noDelete = (e) => {
-    console.log('no delete');
-    setDeleteButton(false);
-  };
-
+function DeletePrompt({ yesDelete, noDelete }) {
   return (
     <div className="delete">
       <h3>Are you sure you want to delete this item?</h3>
