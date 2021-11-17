@@ -52,6 +52,7 @@ const List = ({ token, checkItem }) => {
                   value={doc.id}
                 />{' '}
                 {JSON.stringify(doc.data().item)}
+                {JSON.stringify(doc.data().timesPurchased)}
               </li>
             ))}
           </ul>
