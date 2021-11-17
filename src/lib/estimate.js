@@ -1,4 +1,4 @@
-import calculateEstimate from '@the-collab-lab/shopping-list-utils';
+import { calculateEstimate } from '@the-collab-lab/shopping-list-utils';
 import React, { useState, useEffect } from 'react';
 import firebase from 'firebase/compat/app';
 import { db } from '../lib/firebase';
@@ -26,49 +26,35 @@ import { getToken, words } from '@the-collab-lab/shopping-list-utils';
 
 const estimatedTime = (doc, token) => {
   const data = doc.data();
-  if (data.timeBought) {
-    const timeBetweenPurchases = new Date() - data.timeBought.toDate();
+  console.log('data', data);
+  if (data.lastPurchased) {
+    const timeBetweenPurchases =
+      new Date().getTime() - data.lastPurchased.toMillis();
     const wholeDay = 24 * 60 * 60 * 1000;
-    /*    const daysSinceLastTransaction = Math.round(
-        (new Date() - lastPurchasedDate) / wholeDay,
-      );
-  */
 
     //if else function for daysSinceLastTransaction
-
+    let daysSinceLastTransaction = 0;
     if (timeBetweenPurchases > wholeDay) {
       //days In Between the time bought
-      let daysSinceLastTransaction;
-
-      if (data.lastTimePurchased) {
-        daysSinceLastTransaction = Math.round(
-          (data.timeBought.toDate() - data.lastTimePurchased.toDate()) /
-            wholeDay,
-        );
-      } else {
-        daysSinceLastTransaction = 1;
-      }
+      daysSinceLastTransaction = Math.round(timeBetweenPurchases / wholeDay);
     }
-    //timesPurchased??
-    //const timesPurchased = data.timesPurchased + 1;
-
-    //urgency
 
     const daysUntilNextPurchase = calculateEstimate(
       data.urgency,
-      this.daysSinceLastTransaction,
+      daysSinceLastTransaction,
       data.timesPurchased,
     );
 
-    //daysuntilnextpurchase
-    //when is the next date of purchase?
-    //timestampObj.toMillis().toString()
+    //getTime in javascript is different from react
+    const nextDateOfPurchase = firebase.firestore.Timestamp.fromMillis(
+      daysUntilNextPurchase * wholeDay + data.lastPurchased.toMillis(),
+    );
 
-    const nextDateOfPurchase =
-      daysUntilNextPurchase * wholeDay +
-      firebase.firestore.Timestamp.fromMillis(data.timeBought.toMillis());
+    //console.log("nextDateOfPurchase", nextDateOfPurchase)
+    //console.log("daysUntilNextPurchase", daysUntilNextPurchase)
+    // console.log("wholeDay", wholeDay)
+    //console.log("date",data.lastPurchased.toMillis())
 
-    // const checkItem = (doc) => {
     db.collection(token)
       .doc(doc.id)
       .update({
@@ -83,23 +69,22 @@ const estimatedTime = (doc, token) => {
         // The document probably doesn't exist.
         console.error('Error updating document: ', error);
       });
-
-    //};
-    //console.log(nextDateOfPurchase);
   }
-
-  //console.log(daysUntilNextPurchase)
-
-  // At this point, lastPurchasedDate was converted to nextPurchaseDate
-  /*   lastPurchasedDate.setDate(
-       lastPurchasedDate.getDate() + daysUntilNextPurchase,
-     );
-
-       return lastPurchasedDate;
-
-    
-   */
-
-  // I think we should rename this function to something more specific
+  //added an else if an item is new and doesn't have last purchased
+  else {
+    db.collection(token)
+      .doc(doc.id)
+      .update({
+        lastPurchased: new Date(),
+        timesPurchased: 1,
+      })
+      .then(() => {
+        console.log('Document successfully updated!');
+      })
+      .catch((error) => {
+        // The document probably doesn't exist.
+        console.error('Error updating document: ', error);
+      });
+  }
 };
 export default estimatedTime;

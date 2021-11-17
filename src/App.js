@@ -31,8 +31,8 @@ function App() {
     setToken(token);
   };
 
-  // I think we should rename this function to something more specific
   const checkItem = (doc) => {
+    console.log('App.js, checkItem');
     estimatedTime(doc, token);
   };
 

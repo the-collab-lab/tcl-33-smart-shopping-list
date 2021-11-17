@@ -17,7 +17,9 @@ const List = ({ token, checkItem }) => {
   const [list, loading, error] = useCollection(db.collection(token));
 
   const handleChange = (doc) => {
+    console.log('handleChange');
     if (expired(doc)) {
+      console.log('expired');
       checkItem(doc);
     }
   };

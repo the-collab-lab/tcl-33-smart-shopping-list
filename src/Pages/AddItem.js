@@ -54,6 +54,7 @@ export default function AddItem({ token }) {
             id="soon"
             value="7"
             name="urgency"
+            readOnly
             checked={urgency === 7}
           />
           <label htmlFor="soon">Soon</label>
@@ -64,6 +65,7 @@ export default function AddItem({ token }) {
             id="kind-of-soon"
             value="14"
             name="urgency"
+            readOnly
             checked={urgency === 14}
           />
           <label htmlFor="kind-of-soon"> Kind of soon</label>
@@ -74,6 +76,7 @@ export default function AddItem({ token }) {
             id="not-soon"
             value="30"
             name="urgency"
+            readOnly
             checked={urgency === 30}
           />
           <label htmlFor="not-soon"> Not soon</label>
