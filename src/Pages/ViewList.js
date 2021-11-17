@@ -14,27 +14,24 @@ const ViewList = ({ token, checkItem }) => {
   const [docValue, setDocValue] = useState('');
 
   const confirmDelete = (doc) => {
-    console.log(doc.id);
     setDeleteButton(true);
     setDocValue(doc);
   };
 
-  const yesDelete = (e) => {
+  const yesDeleteButton = (e) => {
     e.preventDefault();
     db.collection(token)
       .doc(docValue.id)
       .delete()
       .then(() => {
         setDeleteButton(false);
-        console.log(docValue.id + 'Successfully deleted!');
       })
       .catch((error) => {
         console.error('removing document: ' + error);
       });
   };
 
-  const noDelete = (e) => {
-    console.log('no delete');
+  const noDeleteButton = (e) => {
     setDeleteButton(false);
   };
 
@@ -86,8 +83,8 @@ const ViewList = ({ token, checkItem }) => {
         docs={filteredDocs}
         handleItemCheck={handleItemCheck}
         isFiltered={!!filterValue}
-        yesDelete={yesDelete}
-        noDelete={noDelete}
+        yesDeleteButton={yesDeleteButton}
+        noDeleteButton={noDeleteButton}
         confirmDelete={confirmDelete}
       />
     </div>
@@ -101,8 +98,8 @@ const List = ({
   handleItemCheck,
   isFiltered,
   deleteButton,
-  yesDelete,
-  noDelete,
+  yesDeleteButton,
+  noDeleteButton,
   confirmDelete,
 }) => {
   if (error) {
@@ -121,7 +118,10 @@ const List = ({
     return (
       <div>
         {deleteButton ? (
-          <DeletePrompt yesDelete={yesDelete} noDelete={noDelete} />
+          <DeletePrompt
+            yesDeleteButton={yesDeleteButton}
+            noDeleteButton={noDeleteButton}
+          />
         ) : null}
         <ul>
           {docs.map((doc) => (
