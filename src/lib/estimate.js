@@ -1,6 +1,8 @@
 import calculateEstimate from '@the-collab-lab/shopping-list-utils';
 import React, { useState, useEffect } from 'react';
 import firebase from 'firebase/compat/app';
+import { db } from '../lib/firebase';
+import { getToken, words } from '@the-collab-lab/shopping-list-utils';
 
 // const calculateEstimate = (
 //   urgency,
@@ -12,7 +14,17 @@ import firebase from 'firebase/compat/app';
 //   //what if it's greater than 2?
 // };
 
-const estimatedTime = (doc) => {
+/*const [token, setToken] = useState(null);
+
+  // console.log(calculateEstimate(urgency, daysSinceLastTransaction, timesPurchase))
+
+  useEffect(() => {
+    const user = localStorage.getItem('Token');
+    user && setToken(user);
+  }, [token]);
+  */
+
+const estimatedTime = (doc, token) => {
   const data = doc.data();
   if (data.timeBought) {
     const timeBetweenPurchases = new Date() - data.timeBought.toDate();
@@ -55,7 +67,25 @@ const estimatedTime = (doc) => {
     const nextDateOfPurchase =
       daysUntilNextPurchase * wholeDay +
       firebase.firestore.Timestamp.fromMillis(data.timeBought.toMillis());
-    console.log(nextDateOfPurchase);
+
+    // const checkItem = (doc) => {
+    db.collection(token)
+      .doc(doc.id)
+      .update({
+        lastPurchased: new Date(),
+        timesPurchased: doc.data().timesPurchased + 1,
+        nextDateOfPurchase: nextDateOfPurchase,
+      })
+      .then(() => {
+        console.log('Document successfully updated!');
+      })
+      .catch((error) => {
+        // The document probably doesn't exist.
+        console.error('Error updating document: ', error);
+      });
+
+    //};
+    //console.log(nextDateOfPurchase);
   }
 
   //console.log(daysUntilNextPurchase)
@@ -69,5 +99,7 @@ const estimatedTime = (doc) => {
 
     
    */
+
+  // I think we should rename this function to something more specific
 };
 export default estimatedTime;

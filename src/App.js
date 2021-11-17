@@ -7,6 +7,7 @@ import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom';
 import './App.css';
 import AddItem from './Pages/AddItem';
 import { db } from './lib/firebase';
+import estimatedTime from './lib/estimate';
 
 function App() {
   const [token, setToken] = useState(null);
@@ -32,20 +33,7 @@ function App() {
 
   // I think we should rename this function to something more specific
   const checkItem = (doc) => {
-    db.collection(token)
-      .doc(doc.id)
-      .update({
-        lastPurchased: new Date(),
-        timesPurchased: doc.data().timesPurchased + 1,
-        //nextDateOfPurchase: nextDateOfPurchase,
-      })
-      .then(() => {
-        console.log('Document successfully updated!');
-      })
-      .catch((error) => {
-        // The document probably doesn't exist.
-        console.error('Error updating document: ', error);
-      });
+    estimatedTime(doc, token);
   };
 
   return (
