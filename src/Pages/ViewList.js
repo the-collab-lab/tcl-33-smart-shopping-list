@@ -10,7 +10,6 @@ import { doc } from 'prettier';
 const ViewList = ({ token, checkItem }) => {
   const [list, loading, error] = useCollection(db.collection(token));
   const [deleteButton, setDeleteButton] = useState(false);
-  const [yesButton, setYesButton] = useState(false);
   const [filterValue, setFilterValue] = useState('');
   const [docValue, setDocValue] = useState('');
 
@@ -21,32 +20,18 @@ const ViewList = ({ token, checkItem }) => {
   };
 
   const yesDelete = (e) => {
-    console.log('hi');
+    e.preventDefault();
     db.collection(token)
       .doc(docValue.id)
       .delete()
       .then(() => {
+        setDeleteButton(false);
         console.log(docValue.id + 'Successfully deleted!');
       })
-
       .catch((error) => {
         console.error('removing document: ' + error);
       });
   };
-
-  // db.collection(token)
-  //   .doc(doc.id)
-  //   .delete()
-  //   .then(() => {
-  //     console.log(doc.id + 'Successfully deleted!');
-  //   })
-
-  //   .catch((error) => {
-  //     console.error('removing document: ' + error);
-  //   });
-  //  else {
-  // console.log('nope');
-  // }
 
   const handleFilterChange = (e) => {
     e.preventDefault();
@@ -62,7 +47,6 @@ const ViewList = ({ token, checkItem }) => {
       if (!filterValue) {
         return true;
       }
-
       return doc.data().item.toLowerCase().includes(filterValue.toLowerCase());
     });
   }, [list, loading, error, filterValue]);
@@ -98,7 +82,6 @@ const ViewList = ({ token, checkItem }) => {
         handleItemCheck={handleItemCheck}
         isFiltered={!!filterValue}
         yesDelete={yesDelete}
-        // deleteItemPrompt={deleteItemPrompt}
         confirmDelete={confirmDelete}
       />
     </div>
@@ -111,7 +94,6 @@ const List = ({
   docs,
   handleItemCheck,
   isFiltered,
-  // deleteItemPrompt,
   deleteButton,
   yesDelete,
   confirmDelete,
@@ -131,9 +113,7 @@ const List = ({
   if (docs) {
     return (
       <div>
-        {deleteButton ? (
-          <DeletePrompt confirmDelete={confirmDelete} yesDelete={yesDelete} />
-        ) : null}
+        {deleteButton ? <DeletePrompt yesDelete={yesDelete} /> : null}
         <ul>
           {docs.map((doc) => (
             <li key={doc.id} style={{ listStyleType: 'none' }}>
