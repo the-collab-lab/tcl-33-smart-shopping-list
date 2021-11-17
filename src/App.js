@@ -37,6 +37,7 @@ function App() {
       .update({
         lastPurchased: new Date(),
         timesPurchased: doc.data().timesPurchased + 1,
+        //nextDateOfPurchase: nextDateOfPurchase,
       })
       .then(() => {
         console.log('Document successfully updated!');

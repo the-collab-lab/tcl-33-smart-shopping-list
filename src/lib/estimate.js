@@ -1,5 +1,7 @@
-import { calculateEstimate } from '@the-collab-lab/shopping-list-utils';
+import calculateEstimate from '@the-collab-lab/shopping-list-utils';
 import React, { useState, useEffect } from 'react';
+import firebase from 'firebase/compat/app';
+
 // const calculateEstimate = (
 //   urgency,
 //   daysSinceLastTransaction,
@@ -48,8 +50,12 @@ const estimatedTime = (doc) => {
 
     //daysuntilnextpurchase
     //when is the next date of purchase?
+    //timestampObj.toMillis().toString()
+
     const nextDateOfPurchase =
-      daysUntilNextPurchase * wholeDay + data.timeBought;
+      daysUntilNextPurchase * wholeDay +
+      firebase.firestore.Timestamp.fromMillis(data.timeBought.toMillis());
+    console.log(nextDateOfPurchase);
   }
 
   //console.log(daysUntilNextPurchase)
