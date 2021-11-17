@@ -12,37 +12,41 @@ const ViewList = ({ token, checkItem }) => {
   const [deleteButton, setDeleteButton] = useState(false);
   const [yesButton, setYesButton] = useState(false);
   const [filterValue, setFilterValue] = useState('');
-
-  // const deleteItemPrompt = (doc) => {
-  //   console.log(doc.id)
-  //   setDeleteButton(true);
-
-  // };
+  const [docValue, setDocValue] = useState('');
 
   const confirmDelete = (doc) => {
     console.log(doc.id);
     setDeleteButton(true);
-
-    if (yesDelete) {
-      db.collection(token)
-        .doc(doc.id)
-        .delete()
-        .then(() => {
-          console.log(doc.id + 'Successfully deleted!');
-        })
-
-        .catch((error) => {
-          console.error('removing document: ' + error);
-        });
-    } else {
-      console.log('nope');
-    }
+    setDocValue(doc);
   };
 
   const yesDelete = (e) => {
-    setYesButton(true);
-    console.log(e);
+    console.log('hi');
+    db.collection(token)
+      .doc(docValue.id)
+      .delete()
+      .then(() => {
+        console.log(docValue.id + 'Successfully deleted!');
+      })
+
+      .catch((error) => {
+        console.error('removing document: ' + error);
+      });
   };
+
+  // db.collection(token)
+  //   .doc(doc.id)
+  //   .delete()
+  //   .then(() => {
+  //     console.log(doc.id + 'Successfully deleted!');
+  //   })
+
+  //   .catch((error) => {
+  //     console.error('removing document: ' + error);
+  //   });
+  //  else {
+  // console.log('nope');
+  // }
 
   const handleFilterChange = (e) => {
     e.preventDefault();

@@ -1,7 +1,7 @@
 import React from 'react';
 
 function DeletePrompt({ yesDelete }) {
-  console.log(yesDelete);
+  // console.log(yesDelete);
   return (
     <div className="delete">
       <h3>Are you sure you want to delete this item?</h3>
