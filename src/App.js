@@ -6,10 +6,12 @@ import Home from './Pages/Home';
 import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom';
 import './App.css';
 import AddItem from './Pages/AddItem';
+// import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from './lib/firebase';
 
 function App() {
   const [token, setToken] = useState(null);
+  // const [list, loading, error] = useCollection(db.collection(token));
 
   useEffect(() => {
     const user = localStorage.getItem('Token');

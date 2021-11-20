@@ -1,12 +1,39 @@
 import React, { useState, useMemo } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import EmptyListPrompt from '../components/EmptyListPrompt';
+import DeletePrompt from '../components/DeletePrompt';
 import { db } from '../lib/firebase';
+import { doc } from 'prettier';
+
+//  #################### VIEW LIST COMPONENT ###################
 
 const ViewList = ({ token, checkItem }) => {
   const [list, loading, error] = useCollection(db.collection(token));
-
+  const [deleteButton, setDeleteButton] = useState(false);
   const [filterValue, setFilterValue] = useState('');
+  const [docValue, setDocValue] = useState('');
+
+  const confirmDelete = (doc) => {
+    setDeleteButton(true);
+    setDocValue(doc);
+  };
+
+  const yesDeleteButton = (e) => {
+    e.preventDefault();
+    db.collection(token)
+      .doc(docValue.id)
+      .delete()
+      .then(() => {
+        setDeleteButton(false);
+      })
+      .catch((error) => {
+        console.error('removing document: ' + error);
+      });
+  };
+
+  const noDeleteButton = (e) => {
+    setDeleteButton(false);
+  };
 
   const handleFilterChange = (e) => {
     e.preventDefault();
@@ -22,7 +49,6 @@ const ViewList = ({ token, checkItem }) => {
       if (!filterValue) {
         return true;
       }
-
       return doc.data().item.toLowerCase().includes(filterValue.toLowerCase());
     });
   }, [list, loading, error, filterValue]);
@@ -51,17 +77,31 @@ const ViewList = ({ token, checkItem }) => {
       </div>
 
       <List
+        deleteButton={deleteButton}
         loading={loading}
         error={error}
         docs={filteredDocs}
         handleItemCheck={handleItemCheck}
         isFiltered={!!filterValue}
+        yesDeleteButton={yesDeleteButton}
+        noDeleteButton={noDeleteButton}
+        confirmDelete={confirmDelete}
       />
     </div>
   );
 };
 
-const List = ({ loading, error, docs, handleItemCheck, isFiltered }) => {
+const List = ({
+  loading,
+  error,
+  docs,
+  handleItemCheck,
+  isFiltered,
+  deleteButton,
+  yesDeleteButton,
+  noDeleteButton,
+  confirmDelete,
+}) => {
   if (error) {
     return <strong>Error: {JSON.stringify(error)}</strong>;
   }
@@ -76,22 +116,33 @@ const List = ({ loading, error, docs, handleItemCheck, isFiltered }) => {
 
   if (docs) {
     return (
-      <ul>
-        {docs.map((doc) => (
-          <li key={doc.id} style={{ listStyleType: 'none' }}>
-            <input
-              type="checkbox"
-              onChange={() => handleItemCheck(doc)}
-              checked={!isExpired(doc)}
-              value={doc.id}
-            />{' '}
-            {doc.data().item}
-          </li>
-        ))}
-      </ul>
+      <div>
+        {deleteButton ? (
+          <DeletePrompt
+            yesDeleteButton={yesDeleteButton}
+            noDeleteButton={noDeleteButton}
+          />
+        ) : null}
+        <ul>
+          {docs.map((doc) => (
+            <li key={doc.id} style={{ listStyleType: 'none' }}>
+              <input
+                type="checkbox"
+                onChange={() => handleItemCheck(doc)}
+                checked={!isExpired(doc)}
+                value={doc.id}
+              />{' '}
+              {doc.data().item}
+              <button onClick={() => confirmDelete(doc)}>Delete</button>
+            </li>
+          ))}
+        </ul>
+      </div>
     );
   }
 };
+
+// ################### IS-EXPIRED FUNCTION ##################
 
 const isExpired = (doc) => {
   if (doc.data().lastPurchased === null) return true;
