@@ -32,7 +32,6 @@ function App() {
   };
 
   const checkItem = (doc) => {
-    console.log('App.js, checkItem');
     estimatedTime(doc, token);
   };
 
