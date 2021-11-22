@@ -132,7 +132,8 @@ const List = ({
                 checked={!isExpired(doc)}
                 value={doc.id}
               />{' '}
-              {doc.data().item}
+              {JSON.stringify(doc.data().item)}
+              {JSON.stringify(doc.data().timesPurchased)}
               <button onClick={() => confirmDelete(doc)}>Delete</button>
             </li>
           ))}

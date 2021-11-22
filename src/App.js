@@ -8,10 +8,13 @@ import './App.css';
 import AddItem from './Pages/AddItem';
 // import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from './lib/firebase';
+import estimatedTime from './lib/estimate';
 
 function App() {
   const [token, setToken] = useState(null);
   // const [list, loading, error] = useCollection(db.collection(token));
+
+  // console.log(calculateEstimate(urgency, daysSinceLastTransaction, timesPurchase))
 
   useEffect(() => {
     const user = localStorage.getItem('Token');
@@ -30,20 +33,8 @@ function App() {
     setToken(token);
   };
 
-  // I think we should rename this function to something more specific
   const checkItem = (doc) => {
-    db.collection(token)
-      .doc(doc.id)
-      .update({
-        lastPurchased: new Date(),
-      })
-      .then(() => {
-        console.log('Document successfully updated!');
-      })
-      .catch((error) => {
-        // The document probably doesn't exist.
-        console.error('Error updating document: ', error);
-      });
+    estimatedTime(doc, token);
   };
 
   return (

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../lib/firebase';
 import ErrorMessage from '../components/ErrorMessage';
+import estimatedTime from '../lib/estimate';
 
 export default function AddItem({ token }) {
   const [list, loading, error] = useCollection(db.collection(token));
@@ -17,6 +18,7 @@ export default function AddItem({ token }) {
         item,
         urgency,
         lastPurchased: null,
+        timesPurchased: 0,
       });
       setUrgency(7);
       setItem('');
@@ -52,6 +54,7 @@ export default function AddItem({ token }) {
             id="soon"
             value="7"
             name="urgency"
+            readOnly
             checked={urgency === 7}
           />
           <label htmlFor="soon">Soon</label>
@@ -62,6 +65,7 @@ export default function AddItem({ token }) {
             id="kind-of-soon"
             value="14"
             name="urgency"
+            readOnly
             checked={urgency === 14}
           />
           <label htmlFor="kind-of-soon"> Kind of soon</label>
@@ -72,6 +76,7 @@ export default function AddItem({ token }) {
             id="not-soon"
             value="30"
             name="urgency"
+            readOnly
             checked={urgency === 30}
           />
           <label htmlFor="not-soon"> Not soon</label>
