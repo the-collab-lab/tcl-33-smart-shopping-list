@@ -38,36 +38,40 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Navbar token={token} />
-        <div className="container mt-2" style={{ marginTop: 40 }}>
-          <Switch>
-            <Route exact path="/">
-              {token ? (
-                <Redirect to="/ViewList" />
-              ) : (
-                <Home
-                  createToken={(e) => createToken(e)}
-                  onSharedToken={shareToken}
-                />
-              )}
-            </Route>
+    <div>
+      <div className="App">
+        <BrowserRouter>
+          <div className="container mt-2" style={{ marginTop: 40 }}>
+            <Switch>
+              <Route exact path="/">
+                {token ? (
+                  <Redirect to="/ViewList" />
+                ) : (
+                  <Home
+                    createToken={(e) => createToken(e)}
+                    onSharedToken={shareToken}
+                  />
+                )}
+              </Route>
 
-            <Route exact path="/AddItem">
-              {!token ? <Redirect to="/" /> : <AddItem token={token} />}
-            </Route>
+              <Route exact path="/AddItem">
+                {!token ? <Redirect to="/" /> : <AddItem token={token} />}
+              </Route>
 
-            <Route exact path="/ViewList">
-              {!token ? (
-                <Redirect to="/" />
-              ) : (
-                <ViewList token={token} checkItem={checkItem} />
-              )}
-            </Route>
-          </Switch>
-        </div>
-      </BrowserRouter>
+              <Route exact path="/ViewList">
+                {!token ? (
+                  <Redirect to="/" />
+                ) : (
+                  <ViewList token={token} checkItem={checkItem} />
+                )}
+              </Route>
+            </Switch>
+          </div>
+          <div className="navbar">
+            <Navbar token={token} />
+          </div>
+        </BrowserRouter>
+      </div>
     </div>
   );
 }
