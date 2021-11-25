@@ -1,8 +1,11 @@
+/** @jsxImportSource @emotion/react */
 import React, { useState } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../lib/firebase';
 import ErrorMessage from '../components/ErrorMessage';
 import estimatedTime from '../lib/estimate';
+import styled from '@emotion/styled';
+import { css, jsx } from '@emotion/react';
 
 export default function AddItem({ token }) {
   const [list, loading, error] = useCollection(db.collection(token));
@@ -82,7 +85,22 @@ export default function AddItem({ token }) {
           <label htmlFor="not-soon"> Not soon</label>
           <br />
         </fieldset>
-        <input type="submit" value="Add item" />
+        <input
+          css={{
+            backgroundColor: 'palegoldenrod',
+            fontSize: 20,
+            borderRadius: 50,
+            borderColor: 'black',
+            padding: 10,
+            borderWidth: 3,
+            color: 'black',
+            '&:hover': {
+              backgroundColor: 'lightgreen',
+            },
+          }}
+          type="submit"
+          value="Add Item"
+        />
       </form>
     </div>
   );

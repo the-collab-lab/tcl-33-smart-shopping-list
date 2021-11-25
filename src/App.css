@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: #fbfadf;
 }
 
 .App-link {
@@ -45,4 +46,10 @@ ul {
   color: #d8000c;
   background-color: #ffbaba;
   background-image: url('https://i.imgur.com/GnyDvKN.png');
+}
+
+.navbar {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
 }
