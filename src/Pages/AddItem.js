@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 /** @jsxImportSource @emotion/react */
+import React, { useState } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../lib/firebase';
 import ErrorMessage from '../components/ErrorMessage';
@@ -94,6 +94,9 @@ export default function AddItem({ token }) {
             padding: 10,
             borderWidth: 3,
             color: 'black',
+            '&:hover': {
+              backgroundColor: 'lightgreen',
+            },
           }}
           type="submit"
           value="Add Item"
