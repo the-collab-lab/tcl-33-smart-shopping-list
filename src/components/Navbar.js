@@ -29,12 +29,9 @@ const Navbar = ({ token }) => {
                   color: 'blue',
                 }}
               >
-                <FontAwesomeIcon
-                  icon={faPlus}
-                  size="lg"
-                  className="tooltiptext"
-                />
+                <FontAwesomeIcon icon={faPlus} size="lg" />
               </NavLink>
+              <span className="tooltiptext">Add an Item</span>
             </div>
 
             <div className="navbar-item-view">
@@ -46,12 +43,9 @@ const Navbar = ({ token }) => {
                   color: 'blue',
                 }}
               >
-                <FontAwesomeIcon
-                  icon={faListAlt}
-                  size="lg"
-                  className="tooltiptext"
-                />
+                <FontAwesomeIcon icon={faListAlt} size="lg" />
               </NavLink>
+              <span className="tooltiptext">View List</span>
             </div>
           </>
         )}

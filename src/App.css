@@ -75,10 +75,10 @@ ul {
   display: inline-block;
 }
 
-.navbar-item-add .navbar-item-view .tooltiptext {
+.navbar-item-add .tooltiptext {
   visibility: hidden;
   width: 120px;
-  background-color: black;
+  background-color: rgb(172, 12, 12);
   color: #fff;
   text-align: center;
   border-radius: 6px;
@@ -87,12 +87,54 @@ ul {
   /* Position the tooltip */
   position: absolute;
   z-index: 1;
-  /* bottom: 100%;
+  bottom: 100%;
+  margin-left: -70px;
+}
+
+.navbar-item-add .tooltiptext::after {
+  content: ' ';
+  position: absolute;
+  top: 100%; /* At the bottom of the tooltip */
   left: 50%;
-  margin-left: -60px; */
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: rgb(172, 12, 12) transparent transparent transparent;
+}
+
+.navbar-item-view .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: rgb(172, 12, 12);
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  margin-left: -70px;
+}
+
+.navbar-item-view .tooltiptext::after {
+  content: ' ';
+  position: absolute;
+  top: 100%; /* At the bottom of the tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: rgb(172, 12, 12) transparent transparent transparent;
 }
 
 .navbar-item-add:hover .tooltiptext {
+  visibility: visible;
+  color: white;
+}
+
+.navbar-item-view:hover .tooltiptext {
   visibility: visible;
   color: white;
 }
