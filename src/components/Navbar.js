@@ -26,7 +26,7 @@ const Navbar = ({ token }) => {
                 to="/AddItem"
                 activeStyle={{
                   fontWeight: 'bold',
-                  color: 'blue',
+                  color: 'black',
                 }}
               >
                 <FontAwesomeIcon icon={faPlus} size="lg" />
@@ -40,12 +40,12 @@ const Navbar = ({ token }) => {
                 to="/ViewList"
                 activeStyle={{
                   fontWeight: 'bold',
-                  color: 'blue',
+                  color: 'black',
                 }}
               >
                 <FontAwesomeIcon icon={faListAlt} size="lg" />
               </NavLink>
-              <span className="tooltiptext">View List</span>
+              <span className="tooltiptext">View Your List</span>
             </div>
           </>
         )}
