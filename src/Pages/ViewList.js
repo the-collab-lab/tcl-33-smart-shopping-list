@@ -4,6 +4,10 @@ import EmptyListPrompt from '../components/EmptyListPrompt';
 import DeletePrompt from '../components/DeletePrompt';
 import { db } from '../lib/firebase';
 import { doc } from 'prettier';
+import styled from '@emotion/styled';
+import { css, jsx } from '@emotion/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBan } from '@fortawesome/free-solid-svg-icons';
 
 //  #################### VIEW LIST COMPONENT ###################
 
@@ -91,6 +95,11 @@ const ViewList = ({ token, checkItem }) => {
   );
 };
 
+const ListItemsStyling = styled('li')`
+  background-color: #a7d82e;
+  margin-bottom: 1rem;
+`;
+
 const List = ({
   loading,
   error,
@@ -125,17 +134,31 @@ const List = ({
         ) : null}
         <ul>
           {docs.map((doc) => (
-            <li key={doc.id} style={{ listStyleType: 'none' }}>
-              <input
-                type="checkbox"
-                onChange={() => handleItemCheck(doc)}
-                checked={!isExpired(doc)}
-                value={doc.id}
-              />{' '}
-              {JSON.stringify(doc.data().item)}
-              {JSON.stringify(doc.data().timesPurchased)}
-              <button onClick={() => confirmDelete(doc)}>Delete</button>
-            </li>
+            <ListItemsStyling
+              key={doc.id}
+              style={{ listStyleType: 'none' }}
+              className="listItemStylingClass"
+            >
+              <div className="checkboxDiv">
+                <input
+                  type="checkbox"
+                  onChange={() => handleItemCheck(doc)}
+                  checked={!isExpired(doc)}
+                  value={doc.id}
+                />{' '}
+              </div>
+              <div className="itemDiv">{doc.data().item} </div>
+              <div className="deleteButtonDiv">
+                <FontAwesomeIcon
+                  icon={faBan}
+                  className="banButton"
+                  onClick={() => confirmDelete(doc)}
+                />
+              </div>
+              <div className="timesPurchasedDiv">
+                {doc.data().timesPurchased}{' '}
+              </div>
+            </ListItemsStyling>
           ))}
         </ul>
       </div>

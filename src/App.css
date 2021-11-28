@@ -53,3 +53,38 @@ ul {
   bottom: 10px;
   width: 100%;
 }
+
+ul {
+  margin-left: 2rem;
+  margin-right: 4rem;
+}
+
+.listItemStylingClass {
+  columns: 4;
+  padding: 1rem 1rem 1rem 2rem;
+  border-radius: 30px;
+}
+
+.checkboxDiv {
+  width: 10%;
+  margin-left: 3rem;
+  background-color: #ac0c0c;
+}
+.itemDiv {
+  padding-left: 2rem;
+  width: 100%;
+  text-align: left;
+}
+
+.deleteButtonDiv {
+  padding-left: 2rem;
+  text-align: center;
+  width: 50%;
+}
+.timesPurchasedDiv {
+  padding-left: 1rem;
+  width: 25%;
+}
+.banButton {
+  color: #ac0c0c;
+}
