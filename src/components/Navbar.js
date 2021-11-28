@@ -17,7 +17,7 @@ const Navbar = ({ token }) => {
               color: 'blue',
             }}
           >
-            <span>Home</span>
+            {/* <span>Home</span> */}
           </NavLink>
         ) : (
           <>

@@ -147,3 +147,10 @@ ul {
 fieldset {
   border: none;
 }
+
+.joinListStyle {
+  background-color: #c8ec6b;
+  padding-top: 0.5rem;
+  padding-bottom: 1rem;
+  margin-top: 2rem;
+}
