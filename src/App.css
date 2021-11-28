@@ -50,6 +50,49 @@ ul {
 
 .navbar {
   position: absolute;
-  bottom: 10px;
+  bottom: 0px;
   width: 100%;
+}
+
+.navbar-items {
+  columns: 2;
+}
+
+.navbar-item-add {
+  background-color: rgb(206, 236, 129);
+  padding: 25px;
+  width: 100%;
+}
+
+.navbar-item-view {
+  background-color: rgb(245, 248, 131);
+  padding: 25px;
+  width: 100%;
+}
+
+.navbar-item-add .navbar-item-view {
+  position: relative;
+  display: inline-block;
+}
+
+.navbar-item-add .navbar-item-view .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  /* bottom: 100%;
+  left: 50%;
+  margin-left: -60px; */
+}
+
+.navbar-item-add:hover .tooltiptext {
+  visibility: visible;
+  color: white;
 }
