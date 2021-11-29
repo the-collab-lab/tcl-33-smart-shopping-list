@@ -17,5 +17,6 @@ Add yourself as a contributor to this project as a Markdown link that links your
 - [Lauren Beatty](https://github.com/laurenmbeatty) 👩‍🎤
 - [Scott Reu](https://github.com/gatsbysghost) 🧙‍♂️
 - [Tanner Gill](https://github.com/tannaurus) 🤠
+- [April Leone](https://github.com/aprilleone)
 
 ## Code of Conduct Contacts
