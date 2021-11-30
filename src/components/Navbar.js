@@ -16,9 +16,7 @@ const Navbar = ({ token }) => {
               fontWeight: 'bold',
               color: 'blue',
             }}
-          >
-            <span>Home</span>
-          </NavLink>
+          ></NavLink>
         ) : (
           <>
             <NavLink
