@@ -1,47 +1,41 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faListAlt } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = ({ token }) => {
-  // What is the purpose of having state in this component
-  const [isOpen, setOpen] = useState(false);
   return (
-    <nav
-      className="navbar is-primary"
-      role="navigation"
-      aria-label="main navigation"
-    >
-      <div className="container">{/* ... */}</div>
-
-      <div className={`navbar-menu ${isOpen && 'is-active'}`}>
-        <div className="navbar-start">
-          {!token ? (
-            <NavLink
-              className="navbar-item"
-              activeClassName="is-active"
-              to="/"
-              activeStyle={{
-                fontWeight: 'bold',
-                color: 'blue',
-              }}
-            >
-              <span>Home&nbsp;&nbsp;</span>
-            </NavLink>
-          ) : (
-            <>
+    <nav>
+      <div className="navbar-items">
+        {!token ? (
+          <NavLink
+            className="navbar-item"
+            activeClassName="is-active"
+            to="/"
+            activeStyle={{
+              fontWeight: 'bold',
+              color: 'blue',
+            }}
+          >
+            {/* <span>Home</span> */}
+          </NavLink>
+        ) : (
+          <>
+            <div className="navbar-item-add">
               <NavLink
-                className="navbar-item"
-                activeClassName="is-active"
                 to="/AddItem"
                 activeStyle={{
                   fontWeight: 'bold',
                   color: 'blue',
                 }}
               >
-                <span>Add Item &nbsp;&nbsp;</span>
+                <FontAwesomeIcon icon={faPlus} size="lg" />
               </NavLink>
+              <span className="tooltiptext">Add an Item</span>
+            </div>
 
+            <div className="navbar-item-view">
               <NavLink
-                className="navbar-item"
                 activeClassName="is-active"
                 to="/ViewList"
                 activeStyle={{
@@ -49,11 +43,12 @@ const Navbar = ({ token }) => {
                   color: 'blue',
                 }}
               >
-                View List&nbsp;&nbsp;
+                <FontAwesomeIcon icon={faListAlt} size="lg" />
               </NavLink>
-            </>
-          )}
-        </div>
+              <span className="tooltiptext">View List</span>
+            </div>
+          </>
+        )}
       </div>
     </nav>
   );
