@@ -16,37 +16,35 @@ const Navbar = ({ token }) => {
               fontWeight: 'bold',
               color: 'blue',
             }}
-          >
-            {/* <span>Home</span> */}
-          </NavLink>
+          ></NavLink>
         ) : (
           <>
-            <div className="navbar-item-add">
-              <NavLink
-                to="/AddItem"
-                activeStyle={{
-                  fontWeight: 'bold',
-                  color: 'blue',
-                }}
-              >
+            <NavLink
+              to="/AddItem"
+              activeStyle={{
+                fontWeight: 'bold',
+                color: 'black',
+              }}
+            >
+              <div className="navbar-item-add">
                 <FontAwesomeIcon icon={faPlus} size="lg" />
-              </NavLink>
-              <span className="tooltiptext">Add an Item</span>
-            </div>
+                <span className="tooltiptext">Add an Item</span>
+              </div>
+            </NavLink>
 
-            <div className="navbar-item-view">
-              <NavLink
-                activeClassName="is-active"
-                to="/ViewList"
-                activeStyle={{
-                  fontWeight: 'bold',
-                  color: 'blue',
-                }}
-              >
+            <NavLink
+              activeClassName="is-active"
+              to="/ViewList"
+              activeStyle={{
+                fontWeight: 'bold',
+                color: 'black',
+              }}
+            >
+              <div className="navbar-item-view">
                 <FontAwesomeIcon icon={faListAlt} size="lg" />
-              </NavLink>
-              <span className="tooltiptext">View List</span>
-            </div>
+                <span className="tooltiptext">View Your List</span>
+              </div>
+            </NavLink>
           </>
         )}
       </div>
