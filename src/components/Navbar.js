@@ -17,7 +17,7 @@ const Navbar = ({ token }) => {
               color: 'blue',
             }}
           >
-            <span>Home</span>
+            
           </NavLink>
         ) : (
           <>
@@ -45,7 +45,9 @@ const Navbar = ({ token }) => {
               >
                 <FontAwesomeIcon icon={faListAlt} size="lg" />
               </NavLink>
+
               <span className="tooltiptext">View Your List</span>
+
             </div>
           </>
         )}
