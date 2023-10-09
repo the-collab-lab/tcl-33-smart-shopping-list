@@ -41,7 +41,10 @@
       "react-app",
       "react-app/jest",
       "plugin:jsx-a11y/recommended"
-    ]
+    ],
+    "rules": {
+      "no-unused-vars": 0
+    }
   },
   "browserslist": {
     "production": [
