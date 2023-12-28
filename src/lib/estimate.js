@@ -2,7 +2,7 @@ import { calculateEstimate } from '@the-collab-lab/shopping-list-utils';
 import React, { useState, useEffect } from 'react';
 import firebase from 'firebase/compat/app';
 import { db } from '../lib/firebase';
-import { getToken, words } from '@the-collab-lab/shopping-list-utils';
+// import { getToken, words } from '@the-collab-lab/shopping-list-utils';
 
 // const calculateEstimate = (
 //   urgency,

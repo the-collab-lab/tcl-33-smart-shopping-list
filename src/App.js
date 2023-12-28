@@ -22,10 +22,11 @@ function App() {
   }, [token]);
 
   const createToken = (e) => {
-    e.preventDefault();
-    const newToken = getToken(words);
-    localStorage.setItem('Token', newToken);
-    setToken(newToken);
+    console.log('Creating new lists is disabled');
+    // e.preventDefault();
+    // const newToken = getToken(words);
+    // localStorage.setItem('Token', newToken);
+    // setToken(newToken);
   };
 
   const shareToken = (token) => {
